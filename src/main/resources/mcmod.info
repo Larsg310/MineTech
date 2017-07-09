@@ -1,0 +1,16 @@
+[
+{
+  "modid": "minetech",
+  "name": "MineTech",
+  "description": "A mod for Minecraft",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Wexalian (larsgerrits)"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

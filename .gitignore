@@ -1,0 +1,13 @@
+/*
+/*/
+!/src/
+!.gitignore
+!gradlew*
+!/gradle/
+!build.gradle
+!libs
+!Ideas*
+!/documentation/
+.gradle
+.gitattributes
+.project
