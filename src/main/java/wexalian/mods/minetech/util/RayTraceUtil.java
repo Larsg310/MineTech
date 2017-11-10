@@ -1,4 +1,4 @@
-package larsg310.mods.minetech.util;
+package wexalian.mods.minetech.util;
 
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;

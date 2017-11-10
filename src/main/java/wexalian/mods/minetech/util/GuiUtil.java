@@ -1,4 +1,4 @@
-package larsg310.mods.minetech.util;
+package wexalian.mods.minetech.util;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -125,14 +125,14 @@ public class GuiUtil
                 yPos = screenHeight - k - 6;
             }
             
-            int color1 = -267386864;
+            int color1 = 0xF0100010;
             drawGradientRect(xPos - 3, yPos - 4, xPos + i + 3, yPos - 3, color1, color1);
             drawGradientRect(xPos - 3, yPos + k + 3, xPos + i + 3, yPos + k + 4, color1, color1);
             drawGradientRect(xPos - 3, yPos - 3, xPos + i + 3, yPos + k + 3, color1, color1);
             drawGradientRect(xPos - 4, yPos - 3, xPos - 3, yPos + k + 3, color1, color1);
             drawGradientRect(xPos + i + 3, yPos - 3, xPos + i + 4, yPos + k + 3, color1, color1);
-            int color2 = 1347420415;
-            int color3 = 1344798847;
+            int color2 = 0x505000FF;
+            int color3 = 0x5028007F;
             drawGradientRect(xPos - 3, yPos - 3 + 1, xPos - 3 + 1, yPos + k + 3 - 1, color2, color3);
             drawGradientRect(xPos + i + 2, yPos - 3 + 1, xPos + i + 3, yPos + k + 3 - 1, color2, color3);
             drawGradientRect(xPos - 3, yPos - 3, xPos + i + 3, yPos - 3 + 1, color2, color2);
@@ -160,14 +160,15 @@ public class GuiUtil
     
     public static void drawGradientRect(int left, int top, int right, int bottom, int startColor, int endColor)
     {
-        float alpha1 = (float) (startColor >> 24 & 255) / 255.0F;
-        float red1 = (float) (startColor >> 16 & 255) / 255.0F;
-        float green1 = (float) (startColor >> 8 & 255) / 255.0F;
-        float blue1 = (float) (startColor & 255) / 255.0F;
-        float alpha2 = (float) (endColor >> 24 & 255) / 255.0F;
-        float red2 = (float) (endColor >> 16 & 255) / 255.0F;
-        float green2 = (float) (endColor >> 8 & 255) / 255.0F;
-        float blue2 = (float) (endColor & 255) / 255.0F;
+        float alpha1 = (float) (startColor >> 24 & 255) / 255F;
+        float red1 = (float) (startColor >> 16 & 255) / 255F;
+        float green1 = (float) (startColor >> 8 & 255) / 255F;
+        float blue1 = (float) (startColor & 255) / 255F;
+        
+        float alpha2 = (float) (endColor >> 24 & 255) / 255F;
+        float red2 = (float) (endColor >> 16 & 255) / 255F;
+        float green2 = (float) (endColor >> 8 & 255) / 255F;
+        float blue2 = (float) (endColor & 255) / 255F;
         GlStateManager.disableTexture2D();
         GlStateManager.enableBlend();
         GlStateManager.disableAlpha();

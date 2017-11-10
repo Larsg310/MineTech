@@ -1,6 +1,6 @@
-package larsg310.mods.minetech.util;
+package wexalian.mods.minetech.util;
 
-import larsg310.mods.minetech.lib.Reference;
+import wexalian.mods.minetech.lib.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;

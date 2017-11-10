@@ -1,0 +1,24 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": {
+            "south": "minetech:blocks/grindstone_side",
+            "east": "minetech:blocks/grindstone_side",
+            "west": "minetech:blocks/grindstone_side",
+            "north": "minetech:blocks/grindstone_front",
+            "up": "minetech:blocks/grindstone_top",
+            "down": "minecraft:blocks/furnace_top",
+            "particle": "#north"
+        },
+        "model": "cube"
+    },
+    "variants": {
+        "facing": {
+            "north": { "y": 0 },
+            "east": { "y": 90 },
+            "south": { "y": 180 },
+            "west": { "y": 270 }
+        },
+        "inventory": [ { } ]
+    }
+}

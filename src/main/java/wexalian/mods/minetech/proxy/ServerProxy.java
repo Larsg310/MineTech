@@ -1,6 +1,6 @@
-package larsg310.mods.minetech.proxy;
+package wexalian.mods.minetech.proxy;
 
 public class ServerProxy implements IProxy
 {
-    
+
 }
