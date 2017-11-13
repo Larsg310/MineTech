@@ -6,7 +6,7 @@ public class MechanicalEnergyHandler implements IMechanicalEnergy
     private int torque;
     
     @Override
-    public void setRMP(int rpm)
+    public void setRPM(int rpm)
     {
         this.rpm = rpm;
     }

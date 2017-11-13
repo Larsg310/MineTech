@@ -5,19 +5,17 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.ItemStackHandler;
-import wexalian.mods.minetech.api.capabilities.mechanical.MechanicalEnergyHandler;
-import wexalian.mods.minetech.capability.CapabilityMechanicalEnergy;
+import wexalian.mods.minetech.api.capabilities.mechanical.IMechanicalEnergy;
+import wexalian.mods.minetech.capability.Capabilities;
 import wexalian.mods.minetech.recipe.GrindstoneRecipes;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public class TileEntityGrindstone extends TileEntity implements ITickable
 {
     public static final int MAX_PROGRESS = 160;
-    
+
     public ItemStackHandler inventory = new ItemStackHandler(8)
     {
         @Override
@@ -26,16 +24,9 @@ public class TileEntityGrindstone extends TileEntity implements ITickable
             return 1;
         }
     };
-    
-    private MechanicalEnergyHandler energy = new MechanicalEnergyHandler();
-    
+
     private int progress = 0;
-    
-    public TileEntityGrindstone()
-    {
-        energy.setRMP(1);
-    }
-    
+
     @Override
     public void update()
     {
@@ -45,17 +36,24 @@ public class TileEntityGrindstone extends TileEntity implements ITickable
             processFinish();
         }
     }
-    
+
+    @SuppressWarnings("ConstantConditions")
     private void processTick()
     {
-        progress += energy.getRPM();
+        TileEntity tile = world.getTileEntity(pos);
+        if (tile != null && tile.hasCapability(Capabilities.MECHANICAL_ENERGY, EnumFacing.DOWN))
+        {
+            IMechanicalEnergy energy = tile.getCapability(Capabilities.MECHANICAL_ENERGY, EnumFacing.DOWN);
+            assert energy != null : "retrieved null capability when hasCapability returned true. this is not good";
+            progress += energy.getRPM();
+        }
     }
-    
+
     private boolean canFinish()
     {
         return progress >= MAX_PROGRESS;
     }
-    
+
     private void processFinish()
     {
         progress -= MAX_PROGRESS;
@@ -65,7 +63,7 @@ public class TileEntityGrindstone extends TileEntity implements ITickable
             if (!stack.isEmpty()) inventory.setStackInSlot(slot, stack);
         }
     }
-    
+
     @Nonnull
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound nbt)
@@ -75,7 +73,7 @@ public class TileEntityGrindstone extends TileEntity implements ITickable
         nbt.setInteger("progress", progress);
         return nbt;
     }
-    
+
     @Override
     public void readFromNBT(NBTTagCompound nbt)
     {
@@ -83,28 +81,14 @@ public class TileEntityGrindstone extends TileEntity implements ITickable
         inventory.deserializeNBT(nbt.getCompoundTag("inventory"));
         progress = nbt.getInteger("progress");
     }
-    
+
     public int getProgress()
     {
         return progress;
     }
-    
+
     public void setProgress(int progress)
     {
         this.progress = progress;
-    }
-    
-    @Override
-    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing)
-    {
-        return capability == CapabilityMechanicalEnergy.MECHANICAL_ENERGY_CAPABILITY || super.hasCapability(capability, facing);
-    }
-    
-    @Nullable
-    @Override
-    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing)
-    {
-        if (capability == CapabilityMechanicalEnergy.MECHANICAL_ENERGY_CAPABILITY) return CapabilityMechanicalEnergy.MECHANICAL_ENERGY_CAPABILITY.cast(energy);
-        return super.getCapability(capability, facing);
     }
 }

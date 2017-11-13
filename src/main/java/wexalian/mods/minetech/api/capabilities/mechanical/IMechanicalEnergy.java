@@ -2,7 +2,7 @@ package wexalian.mods.minetech.api.capabilities.mechanical;
 
 public interface IMechanicalEnergy
 {
-    void setRMP(int rpm);
+    void setRPM(int rpm);
     
     int getRPM();
     

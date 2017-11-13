@@ -1,8 +1,10 @@
 package wexalian.mods.minetech.event;
 
+import wexalian.mods.minetech.block.BlockCrank;
 import wexalian.mods.minetech.block.BlockGrindstone;
 import wexalian.mods.minetech.init.ModBlocks;
 import wexalian.mods.minetech.lib.BlockNames;
+import wexalian.mods.minetech.tileentity.TileEntityCrank;
 import wexalian.mods.minetech.tileentity.TileEntityGrindstone;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -26,16 +28,24 @@ public class RegistryEvents
         ModBlocks.GRINDSTONE = new BlockGrindstone();
         event.getRegistry().register(ModBlocks.GRINDSTONE);
         GameRegistry.registerTileEntity(TileEntityGrindstone.class, BlockNames.GRINDSTONE);
+
+        ModBlocks.CRANK = new BlockCrank();
+        event.getRegistry().register(ModBlocks.CRANK);
+        GameRegistry.registerTileEntity(TileEntityCrank.class, BlockNames.CRANK);
     }
-    
+
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event)
     {
-        ItemBlock GRINDSTONE = new ItemBlock(ModBlocks.GRINDSTONE);
-        GRINDSTONE.setRegistryName(BlockNames.GRINDSTONE);
-        event.getRegistry().register(GRINDSTONE);
+        ItemBlock grindstone = new ItemBlock(ModBlocks.GRINDSTONE);
+        grindstone.setRegistryName(BlockNames.GRINDSTONE);
+        event.getRegistry().register(grindstone);
+
+        ItemBlock crank = new ItemBlock(ModBlocks.CRANK);
+        crank.setRegistryName(BlockNames.CRANK);
+        event.getRegistry().register(crank);
     }
-    
+
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public static void registerModels(ModelRegistryEvent event)
