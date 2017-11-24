@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
 public class TileEntityGrindstone extends TileEntity implements ITickable
 {
     public static final int MAX_PROGRESS = 160;
-
+    
     public ItemStackHandler inventory = new ItemStackHandler(8)
     {
         @Override
@@ -24,9 +24,9 @@ public class TileEntityGrindstone extends TileEntity implements ITickable
             return 1;
         }
     };
-
+    
     private int progress = 0;
-
+    
     @Override
     public void update()
     {
@@ -36,11 +36,10 @@ public class TileEntityGrindstone extends TileEntity implements ITickable
             processFinish();
         }
     }
-
-    @SuppressWarnings("ConstantConditions")
+    
     private void processTick()
     {
-        TileEntity tile = world.getTileEntity(pos);
+        TileEntity tile = world.getTileEntity(pos.up());
         if (tile != null && tile.hasCapability(Capabilities.MECHANICAL_ENERGY, EnumFacing.DOWN))
         {
             IMechanicalEnergy energy = tile.getCapability(Capabilities.MECHANICAL_ENERGY, EnumFacing.DOWN);
@@ -48,12 +47,12 @@ public class TileEntityGrindstone extends TileEntity implements ITickable
             progress += energy.getRPM();
         }
     }
-
+    
     private boolean canFinish()
     {
         return progress >= MAX_PROGRESS;
     }
-
+    
     private void processFinish()
     {
         progress -= MAX_PROGRESS;
@@ -63,7 +62,7 @@ public class TileEntityGrindstone extends TileEntity implements ITickable
             if (!stack.isEmpty()) inventory.setStackInSlot(slot, stack);
         }
     }
-
+    
     @Nonnull
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound nbt)
@@ -73,7 +72,7 @@ public class TileEntityGrindstone extends TileEntity implements ITickable
         nbt.setInteger("progress", progress);
         return nbt;
     }
-
+    
     @Override
     public void readFromNBT(NBTTagCompound nbt)
     {
@@ -81,12 +80,12 @@ public class TileEntityGrindstone extends TileEntity implements ITickable
         inventory.deserializeNBT(nbt.getCompoundTag("inventory"));
         progress = nbt.getInteger("progress");
     }
-
+    
     public int getProgress()
     {
         return progress;
     }
-
+    
     public void setProgress(int progress)
     {
         this.progress = progress;

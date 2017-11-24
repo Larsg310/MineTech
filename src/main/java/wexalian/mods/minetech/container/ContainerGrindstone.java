@@ -1,12 +1,14 @@
 package wexalian.mods.minetech.container;
 
-import wexalian.mods.minetech.tileentity.TileEntityGrindstone;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.SlotItemHandler;
+import wexalian.mods.minetech.tileentity.TileEntityGrindstone;
 
 import javax.annotation.Nonnull;
 
@@ -58,15 +60,29 @@ public class ContainerGrindstone extends Container
         }
     }
     
+    /**
+     * Determines whether the player can use this container
+     *
+     * @param player The player trying to interact with this container
+     * @return True if the player can use the container, false if not
+     */
     @Override
-    public boolean canInteractWith(@Nonnull EntityPlayer playerIn)
+    public boolean canInteractWith(@Nonnull EntityPlayer player)
     {
         return true;
     }
     
+    /**
+     * Handle when the stack in slot (index) is shift-clicked. Normally this moves the stack between the player
+     * inventory and the other inventory(s).
+     *
+     * @param player The player who shift-clicked the slot
+     * @param index  The index of the shift-clicked slot
+     * @return The (part of the) {@link ItemStack ItemStack} which was moved
+     */
     @Nonnull
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
+    public ItemStack transferStackInSlot(EntityPlayer player, int index)
     {
         ItemStack stack = ItemStack.EMPTY;
         Slot slot = inventorySlots.get(index);
@@ -88,6 +104,85 @@ public class ContainerGrindstone extends Container
         return stack;
     }
     
+    /**
+     * Merges provided {@link ItemStack ItemStack} with the first avaliable one in the container/player inventory between startIndex
+     * (included) and endIndex (excluded).
+     *
+     * @param stackToMerge Tthe {@link ItemStack ItemStack} which you want to (try to) merge
+     * @param startIndex   The start index of the inventory (included)
+     * @param endIndex     The end index of the inventory (excluded)
+     * @param reverse      Traverse the inventory from end to start, instead of start to end
+     * @return True if the merge was (partially) successful, false otherwise
+     */
+    @Override
+    protected boolean mergeItemStack(@Nonnull ItemStack stackToMerge, int startIndex, int endIndex, boolean reverse)
+    {
+        boolean success = false;
+        int i = reverse ? endIndex - 1 : startIndex;
+        
+        if (stackToMerge.isStackable())
+        {
+            while (!stackToMerge.isEmpty())
+            {
+                if (reverse ? i < startIndex : i >= endIndex) break;
+                
+                Slot slot = inventorySlots.get(i);
+                ItemStack stackInSlot = slot.getStack();
+                
+                if (!stackInSlot.isEmpty() && stackInSlot.getItem() == stackToMerge.getItem() && (!stackToMerge.getHasSubtypes() || stackToMerge.getMetadata() == stackInSlot.getMetadata()) && ItemStack.areItemStackTagsEqual(stackToMerge, stackInSlot))
+                {
+                    int stackSize = stackInSlot.getCount() + stackToMerge.getCount();
+                    int maxSize = Math.min(slot.getSlotStackLimit(), stackToMerge.getMaxStackSize());
+                    
+                    if (stackSize <= maxSize)
+                    {
+                        stackToMerge.setCount(0);
+                        stackInSlot.setCount(stackSize);
+                        slot.onSlotChanged();
+                        success = true;
+                    }
+                    else if (stackInSlot.getCount() < maxSize)
+                    {
+                        stackToMerge.shrink(maxSize - stackInSlot.getCount());
+                        stackInSlot.setCount(maxSize);
+                        slot.onSlotChanged();
+                        success = true;
+                    }
+                }
+                
+                i += reverse ? -1 : 1;
+            }
+        }
+        
+        if (!stackToMerge.isEmpty())
+        {
+            i = reverse ? endIndex - 1 : startIndex;
+            
+            while (true)
+            {
+                if (reverse ? i < startIndex : i >= endIndex) break;
+                
+                Slot slot = inventorySlots.get(i);
+                ItemStack stackInSlot = slot.getStack();
+                
+                if (stackInSlot.isEmpty() && slot.isItemValid(stackToMerge))
+                {
+                    if (stackToMerge.getCount() > slot.getSlotStackLimit()) slot.putStack(stackToMerge.splitStack(slot.getSlotStackLimit()));
+                    else slot.putStack(stackToMerge.splitStack(stackToMerge.getCount()));
+                    slot.onSlotChanged();
+                    success = true;
+                    break;
+                }
+                
+                i += reverse ? -1 : 1;
+            }
+        }
+        return success;
+    }
+    
+    /**
+     * Looks for changes made in the container, sends them to every listener.
+     */
     @Override
     public void detectAndSendChanges()
     {
@@ -95,12 +190,19 @@ public class ContainerGrindstone extends Container
         
         for (IContainerListener listener : listeners)
         {
-            if (progress != tile.getProgress()) listener.sendWindowProperty(this, PROGRESS_ID, progress);
+            if (progress != tile.getProgress()) listener.sendWindowProperty(this, PROGRESS_ID, tile.getProgress());
         }
         progress = tile.getProgress();
     }
     
+    /**
+     * Update client-side values send from the server using {@link IContainerListener IContainerListener}s
+     *
+     * @param id   The property ID
+     * @param data The data of the property
+     */
     @Override
+    @SideOnly(Side.CLIENT)
     public void updateProgressBar(int id, int data)
     {
         if (id == PROGRESS_ID) tile.setProgress(data);

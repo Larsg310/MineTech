@@ -7,6 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,19 +24,19 @@ public class GrindstoneRecipes
         addGrindingRecipe(Blocks.GRAVEL, new ItemStack(Blocks.SAND));
     }
     
-    public void addGrindingRecipe(Block input, ItemStack output)
+    public void addGrindingRecipe(Block input, @Nonnull ItemStack output)
     {
         addGrindingRecipe(new ItemStack(input), output);
     }
     
-    public void addGrindingRecipe(Item input, ItemStack output)
+    public void addGrindingRecipe(Item input, @Nonnull ItemStack output)
     {
         addGrindingRecipe(new ItemStack(input), output);
     }
     
-    public void addGrindingRecipe(ItemStack input, ItemStack output)
+    public void addGrindingRecipe(@Nonnull ItemStack input, @Nonnull ItemStack output)
     {
-        if (!getGrindingResult(input).isEmpty())
+        if (hasGrindingResult(input))
         {
             MineTech.log.info("Ignored grinding recipe with conflicting input: {} = {}", input, output);
             return;
@@ -43,7 +44,7 @@ public class GrindstoneRecipes
         grindMap.put(input, output);
     }
     
-    public ItemStack getGrindingResult(ItemStack stack)
+    public ItemStack getGrindingResult(@Nonnull ItemStack stack)
     {
         // @formatter:off
         return grindMap.entrySet()
@@ -55,7 +56,12 @@ public class GrindstoneRecipes
         // @formatter:on
     }
     
-    private boolean compareItemStacks(ItemStack stack1, ItemStack stack2)
+    public boolean hasGrindingResult(@Nonnull ItemStack stack)
+    {
+        return !getGrindingResult(stack).isEmpty();
+    }
+    
+    private boolean compareItemStacks(@Nonnull ItemStack stack1, @Nonnull ItemStack stack2)
     {
         return stack2.getItem() == stack1.getItem() && (stack2.getMetadata() == OreDictionary.WILDCARD_VALUE || stack2.getMetadata() == stack1.getMetadata());
     }
