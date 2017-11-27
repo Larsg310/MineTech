@@ -3,6 +3,8 @@ package wexalian.mods.minetech.event;
 import wexalian.mods.minetech.block.BlockCrank;
 import wexalian.mods.minetech.block.BlockGrindstone;
 import wexalian.mods.minetech.init.ModBlocks;
+import wexalian.mods.minetech.init.ModItems;
+import wexalian.mods.minetech.item.ItemCrushedOre;
 import wexalian.mods.minetech.lib.BlockNames;
 import wexalian.mods.minetech.tileentity.TileEntityCrank;
 import wexalian.mods.minetech.tileentity.TileEntityGrindstone;
@@ -37,6 +39,9 @@ public class RegistryEvents
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event)
     {
+        ModItems.CRUSHED_ORE = new ItemCrushedOre();
+        event.getRegistry().register(ModItems.CRUSHED_ORE);
+
         ItemBlock grindstone = new ItemBlock(ModBlocks.GRINDSTONE);
         grindstone.setRegistryName(BlockNames.GRINDSTONE);
         event.getRegistry().register(grindstone);

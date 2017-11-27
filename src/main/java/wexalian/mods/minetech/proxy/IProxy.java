@@ -12,6 +12,4 @@ public interface IProxy
     default void init() {}
     
     default void postInit() {}
-    
-    default IAnimationStateMachine loadAnimation(ResourceLocation location, ImmutableMap<String, ITimeValue> parameters) {return null;}
 }

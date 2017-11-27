@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 import wexalian.mods.minetech.capability.Capabilities;
 import wexalian.mods.minetech.init.GuiHandler;
 import wexalian.mods.minetech.lib.Reference;
+import wexalian.mods.minetech.metal.Metals;
 import wexalian.mods.minetech.proxy.IProxy;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, dependencies = Reference.MOD_DEPENDENCIES)
@@ -20,23 +21,23 @@ public class MineTech
     public static MineTech instance;
     @SidedProxy(clientSide = Reference.CLIENT_PROXY, serverSide = Reference.SERVER_PROXY)
     public static IProxy proxy;
-    
+
     public static final Logger log = LogManager.getLogger(Reference.MOD_NAME);
-    
+
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
         proxy.preInit();
         Capabilities.register();
     }
-    
+
     @Mod.EventHandler
     public void init(FMLInitializationEvent event)
     {
         proxy.init();
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
     }
-    
+
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {

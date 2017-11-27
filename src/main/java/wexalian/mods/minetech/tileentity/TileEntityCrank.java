@@ -21,7 +21,7 @@ public class TileEntityCrank extends TileEntity implements ITickable
 
     @Override
     public void update()
-    {
+        {
         if (crankTime > 0)
         {
             crankTime--;
