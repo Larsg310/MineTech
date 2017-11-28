@@ -1,0 +1,26 @@
+Ores:
+    [Ore] -> 1x[Ingot]                            [Furnace]       1x
+    [Ore] -> 2x[Crushed Ore]:                     [Crusher]
+        [Crushed Ore] -> 1x[Ingot]                [Furnace]       2x
+        [Crushed Ore] -> 1x[Clean Ore]            [Screener]
+            [Clean Ore] -> 1.5x[Liquid]           [Blast Furnace]
+                [Liquid] -> 1x[Ingot]             [Metal Caster]  3x
+
+Ores:
+    Iron
+    Gold
+
+Blocks:
+
+
+Items:
+    Crushed Ore
+    Clean Ore
+
+Liquids:
+    Liquid Metal
+
+(Multiblock) Machines:
+    Crusher
+    Blast Furnace
+    Metal Caster

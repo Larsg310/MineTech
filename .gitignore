@@ -4,3 +4,4 @@
 !gradlew*
 !/gradle/
 !build.gradle
+!ore_processing.txt
