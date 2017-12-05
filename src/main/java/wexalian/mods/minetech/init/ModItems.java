@@ -8,5 +8,8 @@ import javax.annotation.Nonnull;
 public class ModItems
 {
     @Nonnull
-    public static Item CRUSHED_ORE;
+    public static Item DIRTY_ORE_DUST;
+    
+    @Nonnull
+    public static Item ORE_DUST;
 }

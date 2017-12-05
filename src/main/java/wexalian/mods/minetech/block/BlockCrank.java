@@ -10,6 +10,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import wexalian.mods.minetech.init.ModBlocks;
 import wexalian.mods.minetech.lib.BlockNames;
 import wexalian.mods.minetech.tileentity.TileEntityCrank;
 
@@ -84,5 +85,11 @@ public class BlockCrank extends Block
             }
         }
         return true;
+    }
+    
+    @Override
+    public boolean canPlaceBlockAt(World world, @Nonnull BlockPos pos)
+    {
+        return world.getBlockState(pos.down()).getBlock() == ModBlocks.GRINDSTONE;
     }
 }

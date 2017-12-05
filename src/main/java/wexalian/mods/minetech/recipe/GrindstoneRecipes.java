@@ -6,6 +6,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
+import wexalian.mods.minetech.item.ItemDirtyOreDust;
+import wexalian.mods.minetech.metal.Metals;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -19,9 +21,8 @@ public class GrindstoneRecipes
     
     private GrindstoneRecipes()
     {
-        addGrindingRecipe(Blocks.STONE, new ItemStack(Blocks.COBBLESTONE));
-        addGrindingRecipe(Blocks.COBBLESTONE, new ItemStack(Blocks.GRAVEL));
-        addGrindingRecipe(Blocks.GRAVEL, new ItemStack(Blocks.SAND));
+        addGrindingRecipe(Blocks.IRON_ORE, ItemDirtyOreDust.getFromMetal(Metals.IRON,2));
+        addGrindingRecipe(Blocks.GOLD_ORE, ItemDirtyOreDust.getFromMetal(Metals.GOLD,2));
     }
     
     public void addGrindingRecipe(Block input, @Nonnull ItemStack output)

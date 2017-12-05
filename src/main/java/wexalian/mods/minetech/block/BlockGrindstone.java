@@ -9,6 +9,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -35,6 +37,20 @@ public class BlockGrindstone extends Block
         setDefaultState(getBlockState().getBaseState().withProperty(FACING, EnumFacing.NORTH));
     }
     
+    /**
+     * Gets the {@link IBlockState} to place
+     *
+     * @param world  The world the block is being placed in
+     * @param pos    The position the block is being placed at
+     * @param facing The side the block is being placed on
+     * @param hitX   The X coordinate of the hit vector
+     * @param hitY   The Y coordinate of the hit vector
+     * @param hitZ   The Z coordinate of the hit vector
+     * @param meta   The metadata of {@link ItemStack} as processed by {@link Item#getMetadata(int)}
+     * @param placer The entity placing the block
+     * @param hand   The player hand used to place this block
+     * @return The state to be placed in the world
+     */
     @Nonnull
     @Override
     public IBlockState getStateForPlacement(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull EnumFacing facing, float hitX, float hitY, float hitZ, int meta, @Nonnull EntityLivingBase placer, EnumHand hand)
@@ -42,6 +58,12 @@ public class BlockGrindstone extends Block
         return getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
     }
     
+    /**
+     * Convert the given metadata into an {@link IBlockState} for this {@link Block}
+     *
+     * @param meta the metadata to convert to an {@link IBlockState}
+     * @return The IBlockState corresponding to the meta
+     */
     @SuppressWarnings("deprecation")
     @Nonnull
     @Override

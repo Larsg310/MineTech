@@ -11,6 +11,8 @@ import wexalian.mods.minetech.capability.Capabilities;
 import wexalian.mods.minetech.recipe.GrindstoneRecipes;
 
 import javax.annotation.Nonnull;
+import java.util.Optional;
+import java.util.stream.IntStream;
 
 public class TileEntityGrindstone extends TileEntity implements ITickable
 {
@@ -44,22 +46,47 @@ public class TileEntityGrindstone extends TileEntity implements ITickable
         {
             IMechanicalEnergy energy = tile.getCapability(Capabilities.MECHANICAL_ENERGY, EnumFacing.DOWN);
             assert energy != null : "retrieved null capability when hasCapability returned true. this is not good";
+            for (int slot = 0; slot < inventory.getSlots(); slot++)
+            {
+                ItemStack stack = inventory.getStackInSlot(slot);
+                if (GrindstoneRecipes.instance().hasGrindingResult(stack))
+                {
+                    NBTTagCompound tag = Optional.ofNullable(stack.getTagCompound()).orElse(new NBTTagCompound());
+                    int progress = tag.getInteger("minetech:progress");
+                    progress += energy.getRPM();
+                    tag.setInteger("minetech:progress", progress);
+                    stack.setTagCompound(tag);
+                }
+            }
             progress += energy.getRPM();
+            if (progress >= MAX_PROGRESS) progress -= MAX_PROGRESS;
+            
         }
     }
     
     private boolean canFinish()
     {
-        return progress >= MAX_PROGRESS;
+        //@formatter:off
+        return IntStream.range(0, inventory.getSlots()).mapToObj(slot -> inventory.getStackInSlot(slot))
+                        .map(stack -> Optional.ofNullable(stack.getTagCompound()).orElse(new NBTTagCompound()))
+                        .mapToInt(tag -> tag.getInteger("minetech:progress"))
+                        .anyMatch(progress -> progress >= MAX_PROGRESS);
+        //@formatter:on
     }
     
     private void processFinish()
     {
-        progress -= MAX_PROGRESS;
         for (int slot = 0; slot < inventory.getSlots(); slot++)
         {
-            ItemStack stack = GrindstoneRecipes.instance().getGrindingResult(inventory.getStackInSlot(slot)).copy();
-            if (!stack.isEmpty()) inventory.setStackInSlot(slot, stack);
+            ItemStack stack = inventory.getStackInSlot(slot);
+            NBTTagCompound tag = Optional.ofNullable(stack.getTagCompound()).orElse(new NBTTagCompound());
+            int progress = tag.getInteger("minetech:progress");
+            if (progress >= MAX_PROGRESS)
+            {
+                ItemStack result = GrindstoneRecipes.instance().getGrindingResult(stack).copy();
+                if (!result.isEmpty()) inventory.setStackInSlot(slot, result);
+            }
+            
         }
     }
     

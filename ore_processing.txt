@@ -1,10 +1,11 @@
 Ores:
-    [Ore] -> 1x[Ingot]                            [Furnace]       1x
-    [Ore] -> 2x[Crushed Ore]:                     [Crusher]
-        [Crushed Ore] -> 1x[Ingot]                [Furnace]       2x
-        [Crushed Ore] -> 1x[Clean Ore]            [Screener]
-            [Clean Ore] -> 1.5x[Liquid]           [Blast Furnace]
-                [Liquid] -> 1x[Ingot]             [Metal Caster]  3x
+    1x[Ore] -> 1x[Ingot]                            [Furnace]       Total: 1x
+    1x[Ore] -> 2x[Dirty Ore Dust]:                  [Crusher]
+        1x[Dirty Ore Dust] -> 1x[Ingot]             [Furnace]       Total: 2x
+        1x[Dirty Ore Dust] -> 1x[Ore Dust]          [Screener]
+            1x[Ore Dust] -> 1x[Ingot]               [Furnace]       Total: 2x
+            1x[Ore Dust] -> 1.5x[Liquid]            [Blast Furnace]
+                1x[Liquid] -> 1x[Ingot]             [Metal Caster]  Total: 3x
 
 Ores:
     Iron
@@ -14,8 +15,8 @@ Blocks:
 
 
 Items:
-    Crushed Ore
-    Clean Ore
+    Dirty Ore Dust (Iron, Gold)
+    Ore Dust (Iron, Gold)
 
 Liquids:
     Liquid Metal

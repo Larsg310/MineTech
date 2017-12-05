@@ -2,11 +2,13 @@ language.name=English
 language.region=United States
 language.code=en_us
 
-minetech:metal.iron.color=0xB4B4B4
-minetech:metal.gold.color=0xE3DE00
-
 tile.minetech:grindstone.name=Grindstone
 tile.minetech:crank.name=Crank
 
-item.minetech:crushed_ore.iron.name=Crushed Iron Ore
-item.minetech:crushed_ore.gold.name=Crushed Gold Ore
+item.minetech:dirty_ore_dust.iron.name=Dirty Iron Dust
+item.minetech:dirty_ore_dust.gold.name=Dirty Gold Dust
+
+item.minetech:ore_dust.iron.name=Iron Dust
+item.minetech:ore_dust.gold.name=Gold Dust
+
+tooltip.minetech:progress=Grinding Progress: %d
