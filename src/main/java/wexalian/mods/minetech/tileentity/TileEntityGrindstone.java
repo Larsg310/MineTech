@@ -18,6 +18,8 @@ public class TileEntityGrindstone extends TileEntity implements ITickable
 {
     public static final int MAX_PROGRESS = 160;
     
+    public static final String NBT_KEY_PROGRESS = "minetech:progress";
+    
     public ItemStackHandler inventory = new ItemStackHandler(8)
     {
         @Override
@@ -45,16 +47,16 @@ public class TileEntityGrindstone extends TileEntity implements ITickable
         if (tile != null && tile.hasCapability(Capabilities.MECHANICAL_ENERGY, EnumFacing.DOWN))
         {
             IMechanicalEnergy energy = tile.getCapability(Capabilities.MECHANICAL_ENERGY, EnumFacing.DOWN);
-            assert energy != null : "retrieved null capability when hasCapability returned true. this is not good";
+            assert energy != null : "retrieved null capability when hasCapability() returned true. bad modder!";
             for (int slot = 0; slot < inventory.getSlots(); slot++)
             {
                 ItemStack stack = inventory.getStackInSlot(slot);
                 if (GrindstoneRecipes.instance().hasGrindingResult(stack))
                 {
                     NBTTagCompound tag = Optional.ofNullable(stack.getTagCompound()).orElse(new NBTTagCompound());
-                    int progress = tag.getInteger("minetech:progress");
+                    int progress = tag.getInteger(NBT_KEY_PROGRESS);
                     progress += energy.getRPM();
-                    tag.setInteger("minetech:progress", progress);
+                    tag.setInteger(NBT_KEY_PROGRESS, progress);
                     stack.setTagCompound(tag);
                 }
             }
@@ -69,7 +71,7 @@ public class TileEntityGrindstone extends TileEntity implements ITickable
         //@formatter:off
         return IntStream.range(0, inventory.getSlots()).mapToObj(slot -> inventory.getStackInSlot(slot))
                         .map(stack -> Optional.ofNullable(stack.getTagCompound()).orElse(new NBTTagCompound()))
-                        .mapToInt(tag -> tag.getInteger("minetech:progress"))
+                        .mapToInt(tag -> tag.getInteger(NBT_KEY_PROGRESS))
                         .anyMatch(progress -> progress >= MAX_PROGRESS);
         //@formatter:on
     }
@@ -80,7 +82,7 @@ public class TileEntityGrindstone extends TileEntity implements ITickable
         {
             ItemStack stack = inventory.getStackInSlot(slot);
             NBTTagCompound tag = Optional.ofNullable(stack.getTagCompound()).orElse(new NBTTagCompound());
-            int progress = tag.getInteger("minetech:progress");
+            int progress = tag.getInteger(NBT_KEY_PROGRESS);
             if (progress >= MAX_PROGRESS)
             {
                 ItemStack result = GrindstoneRecipes.instance().getGrindingResult(stack).copy();
@@ -96,7 +98,7 @@ public class TileEntityGrindstone extends TileEntity implements ITickable
     {
         super.writeToNBT(nbt);
         nbt.setTag("inventory", inventory.serializeNBT());
-        nbt.setInteger("progress", progress);
+        nbt.setInteger(NBT_KEY_PROGRESS, progress);
         return nbt;
     }
     
@@ -105,7 +107,7 @@ public class TileEntityGrindstone extends TileEntity implements ITickable
     {
         super.readFromNBT(nbt);
         inventory.deserializeNBT(nbt.getCompoundTag("inventory"));
-        progress = nbt.getInteger("progress");
+        progress = nbt.getInteger(NBT_KEY_PROGRESS);
     }
     
     public int getProgress()

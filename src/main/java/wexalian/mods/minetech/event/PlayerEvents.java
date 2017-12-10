@@ -6,6 +6,7 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import wexalian.mods.minetech.tileentity.TileEntityGrindstone;
 
 @Mod.EventBusSubscriber
 public class PlayerEvents
@@ -16,9 +17,9 @@ public class PlayerEvents
         ItemStack stack = event.getItemStack();
         if(stack.getTagCompound() != null)
         {
-            if(stack.getTagCompound().hasKey("minetech:progress", Constants.NBT.TAG_INT))
+            if(stack.getTagCompound().hasKey(TileEntityGrindstone.NBT_KEY_PROGRESS, Constants.NBT.TAG_INT))
             {
-                int progress = stack.getTagCompound().getInteger("minetech:progress");
+                int progress = stack.getTagCompound().getInteger(TileEntityGrindstone.NBT_KEY_PROGRESS);
                 event.getToolTip().add(I18n.format("tooltip.minetech:progress", progress));
             }
         }

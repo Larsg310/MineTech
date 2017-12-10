@@ -8,7 +8,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import wexalian.mods.minetech.init.ModBlocks;
 import wexalian.mods.minetech.lib.BlockNames;
@@ -19,12 +21,17 @@ import javax.annotation.Nullable;
 
 public class BlockCrank extends Block
 {
+    public static final float PIXEL = 0.0625F;
+    
+    public static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(PIXEL * 2, 0, PIXEL * 2, PIXEL * 14, PIXEL * 12, PIXEL * 14);
+    
     public BlockCrank()
     {
         super(Material.WOOD);
         setRegistryName(BlockNames.CRANK);
         setUnlocalizedName(BlockNames.CRANK);
         setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
+        
     }
     
     /**
@@ -59,37 +66,90 @@ public class BlockCrank extends Block
     }
     
     /**
-     *  Called when the block is right clicked by a player.
+     * Called when the block is right clicked by a player.
      *
-     * @param world The World the Block exists in
-     * @param pos The position of the Block
-     * @param state The state of the current Block
+     * @param world  The World the Block exists in
+     * @param pos    The position of the Block
+     * @param state  The state of the current Block
      * @param player The player interacting in the Block
-     * @param hand The hand used by the player
+     * @param hand   The hand used by the player
      * @param facing The side of the Block hit
-     * @param hitX The x value of the hitVec on the Block (range: 0F-1F)
-     * @param hitY The y value of the hitVec on the Block (range: 0F-1F)
-     * @param hitZ The z value of the hitVec on the Block (range: 0F-1F)
+     * @param hitX   The x value of the hitVec on the Block (range: 0F-1F)
+     * @param hitY   The y value of the hitVec on the Block (range: 0F-1F)
+     * @param hitZ   The z value of the hitVec on the Block (range: 0F-1F)
      * @return True if the interaction was successful, false otherwise
      */
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
-        if (!world.isRemote)
+        TileEntity tile = world.getTileEntity(pos);
+        if (tile instanceof TileEntityCrank)
         {
-            TileEntity tile = world.getTileEntity(pos);
-            if (tile instanceof TileEntityCrank)
-            {
-                ((TileEntityCrank) tile).tryCrank();
-                return true;
-            }
+            ((TileEntityCrank) tile).tryCrank();
+            return true;
         }
         return true;
     }
     
+    /**
+     * Checks if this block can be placed exactly at the given position.
+     *
+     * @param world The World the Block exists in
+     * @param pos   The position of the Block
+     * @return True if the Block is placable at this position
+     */
     @Override
     public boolean canPlaceBlockAt(World world, @Nonnull BlockPos pos)
     {
         return world.getBlockState(pos.down()).getBlock() == ModBlocks.GRINDSTONE;
     }
+    
+    @SuppressWarnings("deprecation")
+    @Nonnull
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+    {
+        return BOUNDING_BOX;
+    }
+    
+    /**
+     * Used to determine ambient occlusion and culling when rebuilding chunks for render
+     *
+     * @param state the state of the block
+     * @return True if the Block is opaque
+     */
+    @SuppressWarnings("deprecation")
+    @Override
+    public boolean isOpaqueCube(IBlockState state)
+    {
+        return false;
+    }
+    
+    /**
+     * Used to if the Block is a full block
+     *
+     * @param state the state of the block
+     * @return True if the Block is a full block
+     */
+    @SuppressWarnings("deprecation")
+    @Override
+    public boolean isFullBlock(IBlockState state)
+    {
+        return false;
+    }
+    
+    /**
+     * Used to determine if the Block is a full cube
+     *
+     * @param state the state of the block
+     * @return True if the Block is a full cube
+     */
+    @SuppressWarnings("deprecation")
+    @Override
+    public boolean isFullCube(IBlockState state)
+    {
+        return false;
+    }
+    
+    
 }

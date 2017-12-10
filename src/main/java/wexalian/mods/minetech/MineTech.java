@@ -11,8 +11,8 @@ import org.apache.logging.log4j.Logger;
 import wexalian.mods.minetech.capability.Capabilities;
 import wexalian.mods.minetech.init.GuiHandler;
 import wexalian.mods.minetech.lib.Reference;
-import wexalian.mods.minetech.metal.Metals;
 import wexalian.mods.minetech.proxy.IProxy;
+import wexalian.mods.minetech.recipe.SmeltingRecipes;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, dependencies = Reference.MOD_DEPENDENCIES)
 public class MineTech
@@ -36,6 +36,7 @@ public class MineTech
     {
         proxy.init();
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
+        SmeltingRecipes.init();
     }
 
     @Mod.EventHandler

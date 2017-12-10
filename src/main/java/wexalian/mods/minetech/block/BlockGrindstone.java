@@ -9,6 +9,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -18,8 +19,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import wexalian.mods.minetech.MineTech;
 import wexalian.mods.minetech.init.GuiHandler;
+import wexalian.mods.minetech.init.ModBlocks;
 import wexalian.mods.minetech.lib.BlockNames;
 import wexalian.mods.minetech.tileentity.TileEntityGrindstone;
+import wexalian.mods.minetech.util.InventoryUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -103,5 +106,19 @@ public class BlockGrindstone extends Block
     {
         if (!world.isRemote) player.openGui(MineTech.instance, GuiHandler.IDs.GRINDSTONE, world, pos.getX(), pos.getY(), pos.getZ());
         return true;
+    }
+    
+    @Override
+    public void breakBlock(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state)
+    {
+        TileEntityGrindstone tile = (TileEntityGrindstone) world.getTileEntity(pos);
+        assert tile != null;
+        InventoryUtil.dropInventoryItems(world, pos, tile.inventory);
+        if (world.getBlockState(pos.up()).getBlock() == ModBlocks.CRANK)
+        {
+            ModBlocks.CRANK.dropBlockAsItem(world, pos.up(), state, 0);
+            world.setBlockState(pos.up(), Blocks.AIR.getDefaultState(), 3);
+        }
+        super.breakBlock(world, pos, state);
     }
 }

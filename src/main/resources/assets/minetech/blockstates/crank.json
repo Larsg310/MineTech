@@ -1,0 +1,13 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": {
+            "plank": "minecraft:blocks/planks_oak",
+            "particle": "#plank"
+        }
+    },
+    "variants": {
+        "normal": { "model": "minetech:empty" } ,
+        "inventory": [ { "model": "minetech:item/crank" } ]
+    }
+}

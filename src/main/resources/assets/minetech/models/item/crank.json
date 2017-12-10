@@ -1,0 +1,32 @@
+{
+    "parent": "block/block",
+    "textures": {
+        "planks": "blocks/planks_oak"
+    },
+    "elements": [
+        {
+            "from": [ 7, 2, 7 ],
+            "to": [ 9, 14, 9 ],
+            "faces": {
+                "down":  { "texture": "#planks" },
+                "up":    { "texture": "#planks" },
+                "north": { "texture": "#planks" },
+                "south": { "texture": "#planks" },
+                "west":  { "texture": "#planks" },
+                "east":  { "texture": "#planks" }
+            }
+        },
+        {
+            "from": [ 7, 12, 9 ],
+            "to": [ 9, 14, 15 ],
+            "faces": {
+                "down":  { "texture": "#planks" },
+                "up":    { "texture": "#planks" },
+                "north": { "texture": "#planks" },
+                "south": { "texture": "#planks" },
+                "west":  { "texture": "#planks" },
+                "east":  { "texture": "#planks" }
+            }
+        }
+    ]
+}
