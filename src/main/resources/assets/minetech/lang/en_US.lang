@@ -4,6 +4,7 @@ language.code=en_us
 
 tile.minetech:grindstone.name=Grindstone
 tile.minetech:crank.name=Crank
+tile.minetech:sieve.name=Sieve
 
 item.minetech:dirty_ore_dust.iron.name=Dirty Iron Dust
 item.minetech:dirty_ore_dust.gold.name=Dirty Gold Dust

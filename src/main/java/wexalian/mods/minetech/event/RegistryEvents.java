@@ -14,6 +14,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import wexalian.mods.minetech.block.BlockCrank;
 import wexalian.mods.minetech.block.BlockGrindstone;
+import wexalian.mods.minetech.block.BlockSieve;
 import wexalian.mods.minetech.init.ModBlocks;
 import wexalian.mods.minetech.init.ModItems;
 import wexalian.mods.minetech.item.ItemDirtyOreDust;
@@ -22,6 +23,7 @@ import wexalian.mods.minetech.lib.BlockNames;
 import wexalian.mods.minetech.lib.ItemNames;
 import wexalian.mods.minetech.tileentity.TileEntityCrank;
 import wexalian.mods.minetech.tileentity.TileEntityGrindstone;
+import wexalian.mods.minetech.tileentity.TileEntitySieve;
 
 import java.util.stream.IntStream;
 
@@ -38,6 +40,10 @@ public class RegistryEvents
         ModBlocks.CRANK = new BlockCrank();
         event.getRegistry().register(ModBlocks.CRANK);
         GameRegistry.registerTileEntity(TileEntityCrank.class, BlockNames.CRANK);
+        
+        ModBlocks.SIEVE = new BlockSieve();
+        event.getRegistry().register(ModBlocks.SIEVE);
+        GameRegistry.registerTileEntity(TileEntitySieve.class, BlockNames.SIEVE);
     }
     
     @SubscribeEvent
@@ -56,6 +62,10 @@ public class RegistryEvents
         ItemBlock crank = new ItemBlock(ModBlocks.CRANK);
         crank.setRegistryName(BlockNames.CRANK);
         event.getRegistry().register(crank);
+        
+        ItemBlock sieve = new ItemBlock(ModBlocks.SIEVE);
+        sieve.setRegistryName(BlockNames.SIEVE);
+        event.getRegistry().register(sieve);
     }
     
     @SubscribeEvent
@@ -64,7 +74,8 @@ public class RegistryEvents
     {
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.GRINDSTONE), 0, new ModelResourceLocation(BlockNames.GRINDSTONE, "inventory"));
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.CRANK), 0, new ModelResourceLocation(BlockNames.CRANK, "inventory"));
-    
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.SIEVE), 0, new ModelResourceLocation(BlockNames.SIEVE, "inventory"));
+        
         IntStream.range(0, ItemDirtyOreDust.TYPES.size()).forEach(meta -> ModelLoader.setCustomModelResourceLocation(ModItems.DIRTY_ORE_DUST, meta, new ModelResourceLocation(ItemNames.DIRTY_ORE_DUST + "_" + ItemDirtyOreDust.TYPES.get(meta).getName(), "inventory")));
         
         IntStream.range(0, ItemOreDust.TYPES.size()).forEach(meta -> ModelLoader.setCustomModelResourceLocation(ModItems.ORE_DUST, meta, new ModelResourceLocation(ItemNames.ORE_DUST + "_" + ItemOreDust.TYPES.get(meta).getName(), "inventory")));

@@ -1,0 +1,58 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": {
+            "base": "minecraft:blocks/planks_oak",
+            "mesh": "minetech:blocks/string_mesh",
+            "particle": "#base"
+        },
+        "model": "minetech:sieve/sieve"
+    },
+    "variants": {
+        "material": {
+            "empty": {
+                "textures": {
+                    "ore": "minecraft:blocks/gravel"
+                }
+            },
+            "iron": {
+                "textures": {
+                    "ore": "minetech:blocks/dirty_ore_iron"
+                }
+            },
+            "gold": {
+                "textures": {
+                    "ore": "minetech:blocks/dirty_ore_gold"
+                }
+            }
+        },
+        "progress": {
+            "0": { },
+            "1": {
+                "submodel": "minetech:sieve/progress_1"
+            },
+            "2": {
+                "submodel": "minetech:sieve/progress_2"
+            },
+            "3": {
+                "submodel": "minetech:sieve/progress_3"
+            },
+            "4": {
+                "submodel": "minetech:sieve/progress_4"
+            },
+            "5": {
+                "submodel": "minetech:sieve/progress_5"
+            },
+            "6": {
+                "submodel": "minetech:sieve/progress_6"
+            },
+            "7": {
+                "submodel": "minetech:sieve/progress_7"
+            },
+            "8": {
+                "submodel": "minetech:sieve/progress_8"
+            }
+        },
+        "inventory": [ { } ]
+    }
+}

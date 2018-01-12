@@ -1,0 +1,14 @@
+{
+    "parent": "block/block",
+    "elements": [
+        {
+            "__comment": "ore",
+            "from": [ 1, 11, 1 ],
+            "to": [ 15, 14, 15 ],
+            "faces": {
+                "down":  { "uv": [ 1, 1, 15, 15 ], "texture": "#ore" },
+                "up":    { "uv": [ 1, 1, 15, 15 ], "texture": "#ore" }
+            }
+        }
+    ]
+}
