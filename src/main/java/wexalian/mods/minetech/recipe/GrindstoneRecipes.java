@@ -16,25 +16,25 @@ import java.util.Map;
 public class GrindstoneRecipes
 {
     private static final GrindstoneRecipes INSTANCE = new GrindstoneRecipes();
-    
+
     private final Map<ItemStack, ItemStack> grindMap = new HashMap<>();
-    
+
     private GrindstoneRecipes()
     {
         addGrindingRecipe(Blocks.IRON_ORE, ItemDirtyOreDust.getFromMetal(Metals.IRON,2));
         addGrindingRecipe(Blocks.GOLD_ORE, ItemDirtyOreDust.getFromMetal(Metals.GOLD,2));
     }
-    
+
     public void addGrindingRecipe(Block input, @Nonnull ItemStack output)
     {
         addGrindingRecipe(new ItemStack(input), output);
     }
-    
+
     public void addGrindingRecipe(Item input, @Nonnull ItemStack output)
     {
         addGrindingRecipe(new ItemStack(input), output);
     }
-    
+
     public void addGrindingRecipe(@Nonnull ItemStack input, @Nonnull ItemStack output)
     {
         if (hasGrindingResult(input))
@@ -44,7 +44,7 @@ public class GrindstoneRecipes
         }
         grindMap.put(input, output);
     }
-    
+
     public ItemStack getGrindingResult(@Nonnull ItemStack stack)
     {
         // @formatter:off
@@ -56,12 +56,11 @@ public class GrindstoneRecipes
                        .orElse(ItemStack.EMPTY);
         // @formatter:on
     }
-    
+
     public boolean hasGrindingResult(@Nonnull ItemStack stack)
     {
         return !getGrindingResult(stack).isEmpty();
     }
-    
     
     public static GrindstoneRecipes instance()
     {
