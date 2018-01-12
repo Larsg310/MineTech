@@ -1,13 +1,13 @@
 package wexalian.mods.minetech.recipe;
 
-import wexalian.mods.minetech.MineTech;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
+import wexalian.mods.minetech.MineTech;
 import wexalian.mods.minetech.item.ItemDirtyOreDust;
 import wexalian.mods.minetech.metal.Metals;
+import wexalian.mods.minetech.util.InventoryUtil;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -50,7 +50,7 @@ public class GrindstoneRecipes
         // @formatter:off
         return grindMap.entrySet()
                        .stream()
-                       .filter(entry -> compareItemStacks(stack, entry.getKey()))
+                       .filter(entry -> InventoryUtil.compareItemStacks(stack, entry.getKey()))
                        .findFirst()
                        .map(Map.Entry::getValue)
                        .orElse(ItemStack.EMPTY);
@@ -62,10 +62,6 @@ public class GrindstoneRecipes
         return !getGrindingResult(stack).isEmpty();
     }
     
-    private boolean compareItemStacks(@Nonnull ItemStack stack1, @Nonnull ItemStack stack2)
-    {
-        return stack2.getItem() == stack1.getItem() && (stack2.getMetadata() == OreDictionary.WILDCARD_VALUE || stack2.getMetadata() == stack1.getMetadata());
-    }
     
     public static GrindstoneRecipes instance()
     {
