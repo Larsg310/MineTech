@@ -7,11 +7,14 @@ import net.minecraftforge.common.capabilities.Capability;
 import wexalian.mods.minetech.api.capabilities.mechanical.IMechanicalEnergy;
 import wexalian.mods.minetech.api.capabilities.mechanical.MechanicalEnergyHandler;
 import wexalian.mods.minetech.capability.Capabilities;
+import wexalian.mods.minetech.recipe.GrindstoneRecipes;
+import wexalian.mods.minetech.util.IWorldUtils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.stream.IntStream;
 
-public class TileEntityCrank extends TileEntity implements ITickable
+public class TileEntityCrank extends TileEntity implements ITickable, IWorldUtils
 {
     public static final int MAX_CRANK_TIME = 20;
     
@@ -40,7 +43,12 @@ public class TileEntityCrank extends TileEntity implements ITickable
     
     private boolean canCrank()
     {
-        return crankTime == 0;
+        if (crankTime != 0) return false;
+        TileEntityGrindstone tile = getTileEntity(world, pos.down());
+        //@formatter:off
+        return IntStream.range(0, tile.inventory.getSlots())
+                        .anyMatch(slot -> !GrindstoneRecipes.instance().getGrindingResult(tile.inventory.getStackInSlot(slot)).isEmpty());
+        //@formatter:on
     }
     
     private void crank()
