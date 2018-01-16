@@ -29,10 +29,7 @@ public class ItemDirtyOreDust extends Item
     {
         if (isInCreativeTab(tab))
         {
-            for (Metals metal : TYPES)
-            {
-                items.add(new ItemStack(this, 1, TYPES.indexOf(metal)));
-            }
+            TYPES.forEach(m -> items.add(new ItemStack(this, 1, TYPES.indexOf(m))));
         }
     }
     
