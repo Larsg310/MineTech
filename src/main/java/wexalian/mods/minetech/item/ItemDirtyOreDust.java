@@ -54,4 +54,14 @@ public class ItemDirtyOreDust extends Item
     {
         return new ItemStack(ModItems.DIRTY_ORE_DUST, amount, TYPES.indexOf(metal));
     }
+    
+    @Nonnull
+    public static Metals getMetalFromStack(ItemStack stack)
+    {
+        if(stack.getItem() == ModItems.DIRTY_ORE_DUST)
+        {
+            return TYPES.get(stack.getItemDamage());
+        }
+        return TYPES.get(0);
+    }
 }

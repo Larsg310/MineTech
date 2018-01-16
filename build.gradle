@@ -23,9 +23,9 @@ compileJava {
 }
 
 minecraft {
-    version = "1.12.2-14.23.0.2519"
+    version = "1.12.2-14.23.1.2589"
     runDir = "run"
-    mappings = "snapshot_20171003"
+    mappings = "snapshot_20180110"
     // makeObfSourceJar = false
 }
 
@@ -60,10 +60,10 @@ repositories {
 }
 
 dependencies {
-    deobfCompile "mezz.jei:jei_1.12.2:4.8.0.110:api"
+    compile "mezz.jei:jei_1.12.2:4.8.5.144:api"
     //deobfCompile "MCMultiPart2:MCMultiPart:2.3.4:universal"
 
-    runtime "mezz.jei:jei_1.12.2:4.8.0.110"
+    runtime "mezz.jei:jei_1.12.2:4.8.5.144"
 }
 
 idea {

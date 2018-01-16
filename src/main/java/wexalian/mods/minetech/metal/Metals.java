@@ -1,6 +1,10 @@
 package wexalian.mods.minetech.metal;
 
-public enum Metals
+import net.minecraft.util.IStringSerializable;
+
+import javax.annotation.Nonnull;
+
+public enum Metals implements IStringSerializable
 {
     IRON("iron"),
     GOLD("gold");
@@ -12,6 +16,8 @@ public enum Metals
         this.name = name;
     }
     
+    @Nonnull
+    @Override
     public String getName()
     {
         return name;

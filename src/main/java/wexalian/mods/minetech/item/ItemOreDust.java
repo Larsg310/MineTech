@@ -9,12 +9,11 @@ import wexalian.mods.minetech.lib.ItemNames;
 import wexalian.mods.minetech.metal.Metals;
 
 import javax.annotation.Nonnull;
-import java.util.Arrays;
 import java.util.List;
 
 public class ItemOreDust extends Item
 {
-    public static final List<Metals> TYPES = Arrays.asList(Metals.IRON, Metals.GOLD);
+    public static final List<Metals> TYPES = ItemDirtyOreDust.TYPES;
     
     public ItemOreDust()
     {

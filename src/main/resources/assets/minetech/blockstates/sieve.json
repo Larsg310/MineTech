@@ -10,11 +10,6 @@
     },
     "variants": {
         "material": {
-            "empty": {
-                "textures": {
-                    "ore": "minecraft:blocks/gravel"
-                }
-            },
             "iron": {
                 "textures": {
                     "ore": "minetech:blocks/dirty_ore_iron"
