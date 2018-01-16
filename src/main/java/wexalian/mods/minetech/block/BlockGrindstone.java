@@ -22,12 +22,13 @@ import wexalian.mods.minetech.init.GuiHandler;
 import wexalian.mods.minetech.init.ModBlocks;
 import wexalian.mods.minetech.lib.BlockNames;
 import wexalian.mods.minetech.tileentity.TileEntityGrindstone;
+import wexalian.mods.minetech.util.IWorldUtils;
 import wexalian.mods.minetech.util.InventoryUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class BlockGrindstone extends Block
+public class BlockGrindstone extends Block implements IWorldUtils
 {
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
     
@@ -111,7 +112,7 @@ public class BlockGrindstone extends Block
     @Override
     public void breakBlock(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state)
     {
-        TileEntityGrindstone tile = (TileEntityGrindstone) world.getTileEntity(pos);
+        TileEntityGrindstone tile = getTileEntity(world, pos);
         assert tile != null;
         InventoryUtil.dropInventoryItems(world, pos, tile.inventory);
         if (world.getBlockState(pos.up()).getBlock() == ModBlocks.CRANK)

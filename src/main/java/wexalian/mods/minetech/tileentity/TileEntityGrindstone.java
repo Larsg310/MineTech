@@ -9,16 +9,18 @@ import net.minecraftforge.items.ItemStackHandler;
 import wexalian.mods.minetech.api.capabilities.mechanical.IMechanicalEnergy;
 import wexalian.mods.minetech.capability.Capabilities;
 import wexalian.mods.minetech.recipe.GrindstoneRecipes;
+import wexalian.mods.minetech.util.IWorldUtils;
 
 import javax.annotation.Nonnull;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-public class TileEntityGrindstone extends TileEntity implements ITickable
+public class TileEntityGrindstone extends TileEntity implements ITickable, IWorldUtils
 {
     public static final int MAX_PROGRESS = 160;
     
     public static final String NBT_KEY_PROGRESS = "minetech:progress";
+    public static final String NBT_KEY_INVENTORY = "minetech:inventory";
     
     public ItemStackHandler inventory = new ItemStackHandler(8)
     {
@@ -43,7 +45,7 @@ public class TileEntityGrindstone extends TileEntity implements ITickable
     
     private void processTick()
     {
-        TileEntity tile = world.getTileEntity(pos.up());
+        TileEntity tile = getTileEntity(world, pos.up());
         if (tile != null && tile.hasCapability(Capabilities.MECHANICAL_ENERGY, EnumFacing.DOWN))
         {
             IMechanicalEnergy energy = tile.getCapability(Capabilities.MECHANICAL_ENERGY, EnumFacing.DOWN);
@@ -97,7 +99,7 @@ public class TileEntityGrindstone extends TileEntity implements ITickable
     public NBTTagCompound writeToNBT(NBTTagCompound nbt)
     {
         super.writeToNBT(nbt);
-        nbt.setTag("inventory", inventory.serializeNBT());
+        nbt.setTag(NBT_KEY_INVENTORY, inventory.serializeNBT());
         nbt.setInteger(NBT_KEY_PROGRESS, progress);
         return nbt;
     }
@@ -106,7 +108,7 @@ public class TileEntityGrindstone extends TileEntity implements ITickable
     public void readFromNBT(NBTTagCompound nbt)
     {
         super.readFromNBT(nbt);
-        inventory.deserializeNBT(nbt.getCompoundTag("inventory"));
+        inventory.deserializeNBT(nbt.getCompoundTag(NBT_KEY_INVENTORY));
         progress = nbt.getInteger(NBT_KEY_PROGRESS);
     }
     

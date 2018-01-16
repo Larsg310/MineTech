@@ -24,12 +24,13 @@ import wexalian.mods.minetech.item.ItemOreDust;
 import wexalian.mods.minetech.lib.BlockNames;
 import wexalian.mods.minetech.metal.Metals;
 import wexalian.mods.minetech.tileentity.TileEntitySieve;
+import wexalian.mods.minetech.util.IWorldUtils;
 import wexalian.mods.minetech.util.InventoryUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class BlockSieve extends Block
+public class BlockSieve extends Block implements IWorldUtils
 {
     public static PropertyEnum<Metals> MATERIAL = PropertyEnum.create("material", Metals.class, ItemDirtyOreDust.TYPES::contains);
     public static PropertyInteger PROGRESS = PropertyInteger.create("progress", 0, 8);
@@ -80,7 +81,7 @@ public class BlockSieve extends Block
     @Override
     public IBlockState getActualState(@Nonnull IBlockState state, IBlockAccess world, BlockPos pos)
     {
-        TileEntitySieve tile = (TileEntitySieve) world.getTileEntity(pos);
+        TileEntitySieve tile = getTileEntity(world, pos);
         assert tile != null : "tile == null: should not be possible";
         return state.withProperty(MATERIAL, ItemDirtyOreDust.getMetalFromStack(tile.getItemStackSieved()));
     }
@@ -88,17 +89,16 @@ public class BlockSieve extends Block
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
-        TileEntitySieve tile = (TileEntitySieve) world.getTileEntity(pos);
+        TileEntitySieve tile = getTileEntity(world, pos);
         
         if (tile != null)
         {
             if (state.getValue(PROGRESS) == 0)
             {
-                if (player.getHeldItem(hand).getItem() == ModItems.DIRTY_ORE_DUST)
-                {
-                    ItemStack stack = player.getHeldItem(hand).copy();
-                    tile.setItemStackSieved(stack);
-                }
+                ItemStack stack = player.getHeldItem(hand).copy();
+                
+                if (stack.getItem() == ModItems.DIRTY_ORE_DUST) tile.setItemStackSieved(stack);
+                else tile.setItemStackSieved(ItemStack.EMPTY);
             }
             
             if (!tile.getItemStackSieved().isEmpty())
