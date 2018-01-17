@@ -1,0 +1,26 @@
+{
+    "type": "forge:ore_shaped",
+    "pattern": [
+        "XYX",
+        "# #",
+        "# #"
+    ],
+    "key": {
+        "#": {
+            "type": "forge:ore_dict",
+            "ore": "stickWood"
+        },
+        "X": {
+            "type": "forge:ore_dict",
+            "ore": "plankWood"
+        },
+        "Y": {
+            "type": "forge:ore_dict",
+            "ore": "string"
+        }
+    },
+    "result": {
+        "item": "minetech:sieve",
+        "count": 1
+    }
+}
