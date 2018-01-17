@@ -95,9 +95,13 @@ public class BlockSieve extends Block implements IWorldUtils
         {
             if (state.getValue(PROGRESS) == 0)
             {
-                ItemStack stack = player.getHeldItem(hand).copy();
+                ItemStack stack = player.getHeldItem(hand);
                 
-                if (stack.getItem() == ModItems.DIRTY_ORE_DUST) tile.setItemStackSieved(stack);
+                if (stack.getItem() == ModItems.DIRTY_ORE_DUST)
+                {
+                    tile.setItemStackSieved(stack.copy());
+                    stack.shrink(1);
+                }
                 else tile.setItemStackSieved(ItemStack.EMPTY);
             }
             
