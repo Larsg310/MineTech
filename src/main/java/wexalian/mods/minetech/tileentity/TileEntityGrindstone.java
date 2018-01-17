@@ -3,11 +3,8 @@ package wexalian.mods.minetech.tileentity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.items.ItemStackHandler;
-import wexalian.mods.minetech.api.capabilities.mechanical.IMechanicalEnergy;
-import wexalian.mods.minetech.capability.Capabilities;
 import wexalian.mods.minetech.recipe.GrindstoneRecipes;
 import wexalian.mods.minetech.util.IWorldUtils;
 
@@ -44,11 +41,9 @@ public class TileEntityGrindstone extends TileEntity implements ITickable, IWorl
     private void processTick()
     {
         TileEntity tile = getTileEntity(world, pos.up());
-        if (tile != null && tile.hasCapability(Capabilities.MECHANICAL_ENERGY, EnumFacing.DOWN))
+        if (tile instanceof TileEntityCrank)
         {
-            IMechanicalEnergy energy = tile.getCapability(Capabilities.MECHANICAL_ENERGY, EnumFacing.DOWN);
-            assert energy != null : "retrieved null capability when hasCapability() returned true. bad modder!";
-            progress += energy.getRPM();
+            if (((TileEntityCrank) tile).isCranking()) progress += 1;
         }
     }
     
@@ -64,7 +59,7 @@ public class TileEntityGrindstone extends TileEntity implements ITickable, IWorl
             ItemStack result = GrindstoneRecipes.instance().getGrindingResult(inventory.getStackInSlot(slot)).copy();
             if (!result.isEmpty()) inventory.setStackInSlot(slot, result);
         }
-        progress-=MAX_PROGRESS;
+        progress -= MAX_PROGRESS;
     }
     
     @Nonnull

@@ -8,7 +8,6 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import wexalian.mods.minetech.capability.Capabilities;
 import wexalian.mods.minetech.init.GuiHandler;
 import wexalian.mods.minetech.lib.Reference;
 import wexalian.mods.minetech.proxy.IProxy;
@@ -28,7 +27,6 @@ public class MineTech
     public void preInit(FMLPreInitializationEvent event)
     {
         proxy.preInit();
-        Capabilities.register();
     }
 
     @Mod.EventHandler
