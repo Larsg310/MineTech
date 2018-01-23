@@ -14,12 +14,7 @@ public class InventoryUtil
 {
     private static final Random RANDOM = new Random();
     
-    public static void dropInventoryItems(World worldIn, BlockPos pos, IItemHandler handler)
-    {
-        dropInventoryItems(worldIn, pos.getX(), pos.getY(), pos.getZ(), handler);
-    }
-    
-    private static void dropInventoryItems(World worldIn, double x, double y, double z, IItemHandler handler)
+    private static void dropInventoryItems(World worldIn, BlockPos pos, IItemHandler handler)
     {
         for (int i = 0; i < handler.getSlots(); ++i)
         {
@@ -27,9 +22,14 @@ public class InventoryUtil
             
             if (!itemstack.isEmpty())
             {
-                spawnItemStack(worldIn, x, y, z, itemstack);
+                spawnItemStack(worldIn, pos, itemstack);
             }
         }
+    }
+    
+    public static void spawnItemStack(World worldIn, BlockPos pos, @Nonnull ItemStack stack)
+    {
+        spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), stack);
     }
     
     public static void spawnItemStack(World worldIn, double x, double y, double z, @Nonnull ItemStack stack)

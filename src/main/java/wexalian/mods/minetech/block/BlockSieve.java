@@ -8,6 +8,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
@@ -29,11 +30,15 @@ import wexalian.mods.minetech.util.InventoryUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Random;
 
 public class BlockSieve extends Block implements IWorldUtils
 {
+    public static final int GRAVEL_DROP_CHANCE = 50;
     public static PropertyEnum<Metals> MATERIAL = PropertyEnum.create("material", Metals.class, ItemDirtyOreDust.TYPES::contains);
     public static PropertyInteger PROGRESS = PropertyInteger.create("progress", 0, 8);
+    
+    private Random random = new Random();
     
     public BlockSieve()
     {
@@ -115,7 +120,8 @@ public class BlockSieve extends Block implements IWorldUtils
                     if (!world.isRemote)
                     {
                         ItemStack result = ItemOreDust.getFromMetal(ItemDirtyOreDust.getMetalFromStack(tile.getItemStackSieved()));
-                        InventoryUtil.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), result);
+                        InventoryUtil.spawnItemStack(world, pos, result);
+                        if (random.nextInt(100) < GRAVEL_DROP_CHANCE) InventoryUtil.spawnItemStack(world, pos, new ItemStack(Blocks.GRAVEL));
                         tile.setItemStackSieved(ItemStack.EMPTY);
                     }
                 }
