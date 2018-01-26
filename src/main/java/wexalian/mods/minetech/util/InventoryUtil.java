@@ -14,7 +14,7 @@ public class InventoryUtil
 {
     private static final Random RANDOM = new Random();
     
-    private static void dropInventoryItems(World worldIn, BlockPos pos, IItemHandler handler)
+    public static void dropInventoryItems(World worldIn, BlockPos pos, IItemHandler handler)
     {
         for (int i = 0; i < handler.getSlots(); ++i)
         {
