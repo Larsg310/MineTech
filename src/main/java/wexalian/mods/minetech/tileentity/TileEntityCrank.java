@@ -3,11 +3,11 @@ package wexalian.mods.minetech.tileentity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import wexalian.mods.minetech.recipe.GrindstoneRecipes;
-import wexalian.mods.minetech.util.IWorldUtils;
+import wexalian.mods.minetech.util.WorldUtil;
 
 import java.util.stream.IntStream;
 
-public class TileEntityCrank extends TileEntity implements ITickable, IWorldUtils
+public class TileEntityCrank extends TileEntity implements ITickable
 {
     public static final int MAX_CRANK_TIME = 20;
     
@@ -33,7 +33,7 @@ public class TileEntityCrank extends TileEntity implements ITickable, IWorldUtil
     private boolean canCrank()
     {
         if (crankTime != 0) return false;
-        TileEntityGrindstone tile = getTileEntity(world, pos.down());
+        TileEntityGrindstone tile = WorldUtil.getTileEntity(world, pos.down());
         //@formatter:off
         return IntStream.range(0, tile.inventory.getSlots())
                         .anyMatch(slot -> !GrindstoneRecipes.instance().getGrindingResult(tile.inventory.getStackInSlot(slot)).isEmpty());

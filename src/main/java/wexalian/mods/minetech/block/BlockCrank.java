@@ -15,12 +15,12 @@ import net.minecraft.world.World;
 import wexalian.mods.minetech.init.ModBlocks;
 import wexalian.mods.minetech.lib.BlockNames;
 import wexalian.mods.minetech.tileentity.TileEntityCrank;
-import wexalian.mods.minetech.util.IWorldUtils;
+import wexalian.mods.minetech.util.WorldUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class BlockCrank extends Block implements IWorldUtils
+public class BlockCrank extends Block
 {
     public static final float PIXEL = 0.0625F;
     
@@ -83,7 +83,7 @@ public class BlockCrank extends Block implements IWorldUtils
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
-        TileEntity tile = getTileEntity(world, pos);
+        TileEntity tile = WorldUtil.getTileEntity(world, pos);
         if (tile instanceof TileEntityCrank)
         {
             ((TileEntityCrank) tile).tryCrank();

@@ -8,17 +8,17 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import wexalian.mods.minetech.container.ContainerGrindstone;
 import wexalian.mods.minetech.gui.GuiGrindstone;
-import wexalian.mods.minetech.util.IWorldUtils;
+import wexalian.mods.minetech.util.WorldUtil;
 
 import javax.annotation.Nullable;
 
-public class GuiHandler implements IGuiHandler, IWorldUtils
+public class GuiHandler implements IGuiHandler
 {
     @Nullable
     @Override
     public Container getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
     {
-        if (ID == IDs.GRINDSTONE) return new ContainerGrindstone(getTileEntity(world, new BlockPos(x, y, z)), player);
+        if (ID == IDs.GRINDSTONE) return new ContainerGrindstone(WorldUtil.getTileEntity(world, new BlockPos(x, y, z)), player);
         return null;
     }
     
@@ -26,7 +26,7 @@ public class GuiHandler implements IGuiHandler, IWorldUtils
     @Override
     public GuiScreen getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
     {
-        if (ID == IDs.GRINDSTONE) return new GuiGrindstone(getTileEntity(world, new BlockPos(x, y, z)), player);
+        if (ID == IDs.GRINDSTONE) return new GuiGrindstone(WorldUtil.getTileEntity(world, new BlockPos(x, y, z)), player);
         return null;
     }
     

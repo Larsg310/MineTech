@@ -12,8 +12,8 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.12-v0.0.1"
-group = "larsg310.mods.minetech"
+version = "1.12.2-v0.0.1"
+group = "wexalian.mods.minetech"
 archivesBaseName = "MineTech"
 
 sourceCompatibility = targetCompatibility = "1.8"
@@ -49,7 +49,7 @@ processResources {
 
 task apiJar(type: Jar) {
     from(sourceSets.main.allSource) {
-        include 'larsg310/mods/minetech/api/**'
+        include 'wexalian/mods/minetech/api/**'
     }
     classifier = 'api'
 }

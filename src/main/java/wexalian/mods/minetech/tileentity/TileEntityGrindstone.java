@@ -6,11 +6,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.items.ItemStackHandler;
 import wexalian.mods.minetech.recipe.GrindstoneRecipes;
-import wexalian.mods.minetech.util.IWorldUtils;
+import wexalian.mods.minetech.util.WorldUtil;
 
 import javax.annotation.Nonnull;
 
-public class TileEntityGrindstone extends TileEntity implements ITickable, IWorldUtils
+public class TileEntityGrindstone extends TileEntity implements ITickable
 {
     public static final int MAX_PROGRESS = 160;
     
@@ -40,7 +40,7 @@ public class TileEntityGrindstone extends TileEntity implements ITickable, IWorl
     
     private void processTick()
     {
-        TileEntity tile = getTileEntity(world, pos.up());
+        TileEntity tile = WorldUtil.getTileEntity(world, pos.up());
         if (tile instanceof TileEntityCrank)
         {
             if (((TileEntityCrank) tile).isCranking()) progress += 1;

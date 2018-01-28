@@ -15,7 +15,7 @@ import org.lwjgl.opengl.GL11;
 import java.util.List;
 
 @SideOnly(Side.CLIENT)
-public class GuiUtil
+public final class GuiUtil
 {
     /**
      * Draws a textured rectangle at z = 0;

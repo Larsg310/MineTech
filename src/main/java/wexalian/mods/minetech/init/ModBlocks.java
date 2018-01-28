@@ -12,7 +12,4 @@ public class ModBlocks
 
     @Nonnull
     public static Block CRANK;
-
-    @Nonnull
-    public static Block SIEVE;
 }
