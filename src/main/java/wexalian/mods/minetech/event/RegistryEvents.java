@@ -7,6 +7,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -15,6 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import wexalian.mods.minetech.block.BlockCrank;
 import wexalian.mods.minetech.block.BlockGrindstone;
 import wexalian.mods.minetech.init.ModBlocks;
+import wexalian.mods.minetech.init.ModFluids;
 import wexalian.mods.minetech.init.ModItems;
 import wexalian.mods.minetech.item.ItemDirtyOreDust;
 import wexalian.mods.minetech.item.ItemOreDust;
@@ -40,6 +42,8 @@ public class RegistryEvents
         ModBlocks.CRANK = new BlockCrank();
         event.getRegistry().register(ModBlocks.CRANK);
         GameRegistry.registerTileEntity(TileEntityCrank.class, BlockNames.CRANK);
+    
+        FluidRegistry.registerFluid(ModFluids.MOLTEN_IRON);
     }
     
     @SubscribeEvent

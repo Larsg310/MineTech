@@ -7,28 +7,29 @@ Ores:
                 1x[Liquid] -> 1x[Ingot]             [Casting]       Total: 3x
 
 Ores:
-[x] Iron
-[x] Gold
+[x] Iron (Vanilla)
+[x] Gold (Vanilla)
 
 Blocks:
-
+[x] Iron Ore (Vanilla)
+[x] Gold Ore (Vanilla)
 
 Items:
 [x] Dirty Ore Dust (Iron, Gold)
 [x] Ore Dust (Iron, Gold)
 
 Liquids:
-[x] Liquid Metal
+[ ] Liquid Metal
 
 Smelting:
-[x] Furnace
+[x] Furnace (Vanilla)
 
 Crushing:
 [x] Grindstone
-[ ]  Crusher
+[ ] Crusher
 
 Cleaning:
-[x] Sieve
+[x] Panning
 
 Melting:
 [ ] Blast Furnace
