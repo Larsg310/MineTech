@@ -1,5 +1,6 @@
 {
 	"textures": {
+		"water": "minecraft:blocks/water_still",
 		"pan": "minetech:items/pan",
 		"planks": "minecraft:blocks/planks_oak",
 		"particle": "minecraft:blocks/planks_oak"
@@ -830,6 +831,48 @@
 				"down": {"uv": [0, 0, 1, 4], "texture": "#planks"}
 			},
 			"type": "cube"
+		},
+		{
+			"name": "water1",
+			"from": [4, 3.5, 2],
+			"to": [12, 3.5, 14],
+			"faces": {
+				"north": {"uv": [0, 0, 8, 0], "texture": "#water"},
+				"east": {"uv": [0, 0, 12, 0], "texture": "#water"},
+				"south": {"uv": [0, 0, 8, 0], "texture": "#water"},
+				"west": {"uv": [0, 0, 12, 0], "texture": "#water"},
+				"up": {"uv": [4, 2, 12, 14], "texture": "#water"},
+				"down": {"uv": [0, 0, 8, 12], "texture": "#water"}
+			},
+			"type": "cube"
+		},
+		{
+			"name": "water2",
+			"from": [2, 3.5, 5],
+			"to": [4, 3.5, 11],
+			"faces": {
+				"north": {"uv": [0, 0, 2, 0], "texture": "#water"},
+				"east": {"uv": [0, 0, 6, 0], "texture": "#water"},
+				"south": {"uv": [0, 0, 2, 0], "texture": "#water"},
+				"west": {"uv": [0, 0, 6, 0], "texture": "#water"},
+				"up": {"uv": [2, 5, 4, 11], "texture": "#water"},
+				"down": {"uv": [0, 0, 2, 6], "texture": "#water"}
+			},
+			"type": "cube"
+		},
+		{
+			"name": "water3",
+			"from": [12, 3.5, 5],
+			"to": [14, 3.5, 11],
+			"faces": {
+				"north": {"uv": [0, 0, 2, 0], "texture": "#water"},
+				"east": {"uv": [0, 0, 6, 0], "texture": "#water"},
+				"south": {"uv": [0, 0, 2, 0], "texture": "#water"},
+				"west": {"uv": [0, 0, 6, 0], "texture": "#water"},
+				"up": {"uv": [12, 5, 14, 11], "texture": "#water"},
+				"down": {"uv": [0, 0, 2, 6], "texture": "#water"}
+			},
+			"type": "cube"
 		}
 	],
 	"groups": [
@@ -883,7 +926,7 @@
 		},
 		{
 			"name": "fourth_layer",
-			"isOpen": true,
+			"isOpen": false,
 			"display": {"visibility": true, "autouv": true},
 			"children": [
 				33,
@@ -909,10 +952,16 @@
 			]
 		},
 		{
-			"name": "handle1",
-			"isOpen": true,
+			"name": "handle",
+			"isOpen": false,
 			"display": {"visibility": true, "autouv": true},
 			"children": [53, 54, 55, 56, 57, 58]
+		},
+		{
+			"name": "water",
+			"isOpen": true,
+			"display": {"visibility": true, "autouv": true},
+			"children": [59, 60, 61]
 		}
 	],
 	"display": {
