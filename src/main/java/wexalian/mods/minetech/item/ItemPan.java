@@ -2,6 +2,7 @@ package wexalian.mods.minetech.item;
 
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -18,9 +19,10 @@ import wexalian.mods.minetech.lib.ItemNames;
 import wexalian.mods.minetech.lib.Reference;
 import wexalian.mods.minetech.metal.Metals;
 import wexalian.mods.minetech.util.InventoryUtil;
-import wexalian.mods.minetech.util.WorldUtil;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class ItemPan extends ItemBase
 {
@@ -94,5 +96,19 @@ public class ItemPan extends ItemBase
         }
         
         return ActionResult.newResult(EnumActionResult.PASS, heldStack);
+    }
+    
+    @Override
+    public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag flag)
+    {
+        NBTTagCompound tag = stack.getTagCompound();
+        if (tag != null && tag.hasKey(NBT_KEY_TYPE) && tag.hasKey(NBT_KEY_PROGRESS))
+        {
+            int type = tag.getInteger(NBT_KEY_TYPE);
+            tooltip.add("Currently Panning: " + ModItems.DIRTY_ORE_DUST.getItemStackDisplayName(ItemDirtyOreDust.getFromMetal(Metals.values()[type])));
+            
+            int progress = tag.getInteger(NBT_KEY_PROGRESS);
+            tooltip.add("Progress: " + (START_PROGRESS - progress) * 100 / START_PROGRESS + "%");
+        }
     }
 }
