@@ -1,5 +1,6 @@
 package wexalian.mods.minetech;
 
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -20,15 +21,20 @@ public class MineTech
     public static MineTech instance;
     @SidedProxy(clientSide = Reference.CLIENT_PROXY, serverSide = Reference.SERVER_PROXY)
     public static IProxy proxy;
-
+    
+    static
+    {
+        FluidRegistry.enableUniversalBucket();
+    }
+    
     public static final Logger log = LogManager.getLogger(Reference.MOD_NAME);
-
+    
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
         proxy.preInit();
     }
-
+    
     @Mod.EventHandler
     public void init(FMLInitializationEvent event)
     {
@@ -36,7 +42,7 @@ public class MineTech
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
         SmeltingRecipes.init();
     }
-
+    
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {

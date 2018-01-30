@@ -2,6 +2,8 @@ language.name=English
 language.region=United States
 language.code=en_us
 
+fluid.minetech:molten_iron=Molten Iron
+
 tile.minetech:grindstone.name=Grindstone
 tile.minetech:crank.name=Crank
 
