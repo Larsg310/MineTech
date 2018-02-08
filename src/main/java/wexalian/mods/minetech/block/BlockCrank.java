@@ -83,12 +83,8 @@ public class BlockCrank extends Block
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
-        TileEntity tile = WorldUtil.getTileEntity(world, pos);
-        if (tile instanceof TileEntityCrank)
-        {
-            ((TileEntityCrank) tile).tryCrank();
-        }
-        return true;
+        TileEntityCrank tile = WorldUtil.getTileEntity(world, pos);
+        return tile != null && tile.tryCrank();
     }
     
     /**

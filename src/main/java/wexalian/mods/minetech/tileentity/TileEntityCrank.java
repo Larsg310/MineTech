@@ -22,12 +22,14 @@ public class TileEntityCrank extends TileEntity implements ITickable
         }
     }
     
-    public void tryCrank()
+    public boolean tryCrank()
     {
         if (canCrank())
         {
             crank();
+            return true;
         }
+        return false;
     }
     
     private boolean canCrank()
