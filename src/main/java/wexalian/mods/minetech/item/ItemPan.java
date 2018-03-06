@@ -2,6 +2,7 @@ package wexalian.mods.minetech.item;
 
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,9 +27,11 @@ import java.util.List;
 
 public class ItemPan extends ItemBase
 {
-    
     public static final String NBT_KEY_TYPE = Reference.MOD_ID + ":type";
     public static final String NBT_KEY_PROGRESS = Reference.MOD_ID + ":progress";
+    
+    public static final String TOOLTIP_KEY_PROGRESS = "tooltip.minetech:progress";
+    public static final String TOOLTIP_KEY_PANNING = "tooltip.minetech:panning";
     
     public static int START_PROGRESS = 4;
     
@@ -105,10 +108,10 @@ public class ItemPan extends ItemBase
         if (tag != null && tag.hasKey(NBT_KEY_TYPE) && tag.hasKey(NBT_KEY_PROGRESS))
         {
             int type = tag.getInteger(NBT_KEY_TYPE);
-            tooltip.add("Currently Panning: " + ModItems.DIRTY_ORE_DUST.getItemStackDisplayName(ItemDirtyOreDust.getFromMetal(Metals.values()[type])));
+            tooltip.add(I18n.format(TOOLTIP_KEY_PANNING, ModItems.DIRTY_ORE_DUST.getItemStackDisplayName(ItemDirtyOreDust.getFromMetal(Metals.values()[type]))));
             
             int progress = tag.getInteger(NBT_KEY_PROGRESS);
-            tooltip.add("Progress: " + (START_PROGRESS - progress) * 100 / START_PROGRESS + "%");
+            tooltip.add(I18n.format(TOOLTIP_KEY_PROGRESS, (START_PROGRESS - progress) * 100 / START_PROGRESS));
         }
     }
 }

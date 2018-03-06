@@ -2,8 +2,6 @@ language.name=English
 language.region=United States
 language.code=en_us
 
-fluid.minetech:molten_iron=Molten Iron
-
 tile.minetech:grindstone.name=Grindstone
 tile.minetech:crank.name=Crank
 
@@ -15,4 +13,5 @@ item.minetech:ore_dust.gold.name=Gold Dust
 
 item.minetech:pan.name=Pan
 
-tooltip.minetech:progress=Grinding Progress: %d
+tooltip.minetech:progress=Progress: %d%%
+tooltip.minetech:panning=Currently Panning: %s
