@@ -9,7 +9,16 @@ public class ModBlocks
 {
     @Nonnull
     public static Block GRINDSTONE;
-
+    
     @Nonnull
     public static Block CRANK;
+    
+    @Nonnull
+    public static Block GEAR;
+    
+    @Nonnull
+    public static Block SHAFT;
+    
+    @Nonnull
+    public static Block KINETIC_TEST;
 }

@@ -6,14 +6,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import wexalian.mods.minetech.block.BlockCrank;
-import wexalian.mods.minetech.block.BlockGrindstone;
+import wexalian.mods.minetech.block.*;
 import wexalian.mods.minetech.init.ModBlocks;
 import wexalian.mods.minetech.init.ModItems;
 import wexalian.mods.minetech.item.ItemDirtyOreDust;
@@ -21,8 +21,8 @@ import wexalian.mods.minetech.item.ItemOreDust;
 import wexalian.mods.minetech.item.ItemPan;
 import wexalian.mods.minetech.lib.BlockNames;
 import wexalian.mods.minetech.lib.ItemNames;
-import wexalian.mods.minetech.tileentity.TileEntityCrank;
-import wexalian.mods.minetech.tileentity.TileEntityGrindstone;
+import wexalian.mods.minetech.lib.Reference;
+import wexalian.mods.minetech.tileentity.*;
 
 import java.util.stream.IntStream;
 
@@ -40,6 +40,18 @@ public class RegistryEvents
         ModBlocks.CRANK = new BlockCrank();
         event.getRegistry().register(ModBlocks.CRANK);
         GameRegistry.registerTileEntity(TileEntityCrank.class, BlockNames.CRANK);
+        
+        ModBlocks.GEAR = new BlockGear();
+        event.getRegistry().register(ModBlocks.GEAR);
+        GameRegistry.registerTileEntity(TileGear.class, BlockNames.GEAR);
+        
+        ModBlocks.SHAFT = new BlockShaft();
+        event.getRegistry().register(ModBlocks.SHAFT);
+        GameRegistry.registerTileEntity(TileShaft.class, BlockNames.SHAFT);
+        
+        ModBlocks.KINETIC_TEST = new BlockKineticTest();
+        event.getRegistry().register(ModBlocks.KINETIC_TEST);
+        GameRegistry.registerTileEntity(TileKineticTest.class, BlockNames.KINETIC_TEST);
     }
     
     @SubscribeEvent
@@ -63,12 +75,26 @@ public class RegistryEvents
         ItemBlock crank = new ItemBlock(ModBlocks.CRANK);
         crank.setRegistryName(BlockNames.CRANK);
         event.getRegistry().register(crank);
+        
+        ItemBlock gear = new ItemBlock(ModBlocks.GEAR);
+        gear.setRegistryName(BlockNames.GEAR);
+        event.getRegistry().register(gear);
+        
+        ItemBlock shaft = new ItemBlock(ModBlocks.SHAFT);
+        shaft.setRegistryName(BlockNames.SHAFT);
+        event.getRegistry().register(shaft);
+        
+        ItemBlock kinetic_test = new ItemBlock(ModBlocks.KINETIC_TEST);
+        kinetic_test.setRegistryName(BlockNames.KINETIC_TEST);
+        event.getRegistry().register(kinetic_test);
     }
     
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public static void registerModels(ModelRegistryEvent event)
     {
+        OBJLoader.INSTANCE.addDomain(Reference.MOD_ID);
+        
         //BLOCK MODELS
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.GRINDSTONE), 0, new ModelResourceLocation(BlockNames.GRINDSTONE, "inventory"));
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.CRANK), 0, new ModelResourceLocation(BlockNames.CRANK, "inventory"));
