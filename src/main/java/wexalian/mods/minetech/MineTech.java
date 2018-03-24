@@ -1,6 +1,5 @@
 package wexalian.mods.minetech;
 
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -21,11 +20,6 @@ public class MineTech
     public static MineTech instance;
     @SidedProxy(clientSide = Reference.CLIENT_PROXY, serverSide = Reference.SERVER_PROXY)
     public static IProxy proxy;
-    
-    static
-    {
-        FluidRegistry.enableUniversalBucket();
-    }
     
     public static final Logger log = LogManager.getLogger(Reference.MOD_NAME);
     
