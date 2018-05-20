@@ -89,9 +89,10 @@ public class RegistryEvents
     @SideOnly(Side.CLIENT)
     public static void registerModels(ModelRegistryEvent event)
     {
-        //BLOCK MODELS
+        //ITEMBLOCK MODELS
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.GRINDSTONE), 0, new ModelResourceLocation(BlockNames.GRINDSTONE, "inventory"));
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.CRANK), 0, new ModelResourceLocation(BlockNames.CRANK, "inventory"));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.SHAFT), 0, new ModelResourceLocation(BlockNames.SHAFT, "inventory"));
         
         //ITEM MODELS
         IntStream.range(0, ItemDirtyOreDust.TYPES.size()).forEach(meta -> ModelLoader.setCustomModelResourceLocation(ModItems.DIRTY_ORE_DUST, meta, new ModelResourceLocation(ItemNames.DIRTY_ORE_DUST + "_" + ItemDirtyOreDust.TYPES.get(meta).getName(), "inventory")));

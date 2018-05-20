@@ -14,12 +14,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
-import wexalian.mods.minetech.tileentity.mechanical.TileEntityShaft;
+import wexalian.mods.minetech.tileentity.TileEntityRotating;
 
-public class TileEntityRotatingRenderer extends TileEntitySpecialRenderer<TileEntityShaft>
+public class TileEntityRotatingRenderer extends TileEntitySpecialRenderer<TileEntityRotating>
 {
     @Override
-    public void render(TileEntityShaft te, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
+    public void render(TileEntityRotating te, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
     {
         GlStateManager.pushMatrix();
         GlStateManager.translate(x + 0.5, y + 0.5, z + 0.5);

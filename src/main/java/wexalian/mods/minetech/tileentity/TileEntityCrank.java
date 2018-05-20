@@ -1,13 +1,15 @@
 package wexalian.mods.minetech.tileentity;
 
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import wexalian.mods.minetech.recipe.GrindstoneRecipes;
 import wexalian.mods.minetech.util.WorldUtil;
 
+import javax.annotation.Nonnull;
 import java.util.stream.IntStream;
 
-public class TileEntityCrank extends TileEntity implements ITickable
+public class TileEntityCrank extends TileEntityRotating implements ITickable
 {
     public static final int MAX_CRANK_TIME = 20;
     
@@ -43,13 +45,22 @@ public class TileEntityCrank extends TileEntity implements ITickable
         crankTime += MAX_CRANK_TIME;
     }
     
-    public int getCrankTime()
-    {
-        return crankTime;
-    }
-    
     public boolean isCranking()
     {
         return crankTime > 0;
+    }
+    
+    @Override
+    public float getAngle(float partialTicks)
+    {
+        if (isCranking()) return 360F / MAX_CRANK_TIME * crankTime;
+        return 0F;
+    }
+    
+    @Nonnull
+    @Override
+    public EnumFacing.Axis getRotationAxis()
+    {
+        return EnumFacing.Axis.Y;
     }
 }
