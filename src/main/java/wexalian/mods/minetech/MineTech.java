@@ -7,12 +7,16 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import wexalian.mods.minetech.init.GuiHandler;
+import wexalian.mods.minetech.kinesis.KineticManager;
 import wexalian.mods.minetech.lib.Reference;
+import wexalian.mods.minetech.network.PacketKineticUpdate;
 import wexalian.mods.minetech.proxy.IProxy;
 import wexalian.mods.minetech.recipe.SmeltingRecipes;
+import wexalian.mods.minetech.simple.SimpleCapabilityManager;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, dependencies = Reference.MOD_DEPENDENCIES)
 public class MineTech
@@ -29,6 +33,8 @@ public class MineTech
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
+        SimpleCapabilityManager.INSTANCE.init(event.getAsmData());
+        KineticManager.init();
         proxy.preInit();
     }
     
@@ -36,7 +42,11 @@ public class MineTech
     public void init(FMLInitializationEvent event)
     {
         proxy.init();
+        
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
+        
+        networkManager.registerMessage(PacketKineticUpdate.Handler.class, PacketKineticUpdate.class, 0, Side.CLIENT);
+        
         SmeltingRecipes.init();
     }
     

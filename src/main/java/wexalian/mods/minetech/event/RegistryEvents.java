@@ -14,6 +14,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import wexalian.mods.minetech.block.BlockCrank;
 import wexalian.mods.minetech.block.BlockGrindstone;
+import wexalian.mods.minetech.block.BlockKineticGenerator;
+import wexalian.mods.minetech.block.BlockShaft;
 import wexalian.mods.minetech.init.ModBlocks;
 import wexalian.mods.minetech.init.ModItems;
 import wexalian.mods.minetech.item.ItemDirtyOreDust;
@@ -23,6 +25,8 @@ import wexalian.mods.minetech.lib.BlockNames;
 import wexalian.mods.minetech.lib.ItemNames;
 import wexalian.mods.minetech.tileentity.TileEntityCrank;
 import wexalian.mods.minetech.tileentity.TileEntityGrindstone;
+import wexalian.mods.minetech.tileentity.TileEntityKineticGenerator;
+import wexalian.mods.minetech.tileentity.TileEntityShaft;
 
 import java.util.stream.IntStream;
 
@@ -40,6 +44,14 @@ public class RegistryEvents
         ModBlocks.CRANK = new BlockCrank();
         event.getRegistry().register(ModBlocks.CRANK);
         GameRegistry.registerTileEntity(TileEntityCrank.class, BlockNames.CRANK);
+        
+        ModBlocks.KINETIC_GENERATOR = new BlockKineticGenerator();
+        event.getRegistry().register(ModBlocks.KINETIC_GENERATOR);
+        GameRegistry.registerTileEntity(TileEntityKineticGenerator.class, BlockNames.KINETIC_GENERATOR);
+        
+        ModBlocks.SHAFT = new BlockShaft();
+        event.getRegistry().register(ModBlocks.SHAFT);
+        GameRegistry.registerTileEntity(TileEntityShaft.class, BlockNames.SHAFT);
     }
     
     @SubscribeEvent
@@ -63,6 +75,14 @@ public class RegistryEvents
         ItemBlock crank = new ItemBlock(ModBlocks.CRANK);
         crank.setRegistryName(BlockNames.CRANK);
         event.getRegistry().register(crank);
+        
+        ItemBlock kinetic_generator = new ItemBlock(ModBlocks.KINETIC_GENERATOR);
+        kinetic_generator.setRegistryName(BlockNames.KINETIC_GENERATOR);
+        event.getRegistry().register(kinetic_generator);
+        
+        ItemBlock shaft = new ItemBlock(ModBlocks.SHAFT);
+        shaft.setRegistryName(BlockNames.SHAFT);
+        event.getRegistry().register(shaft);
     }
     
     @SubscribeEvent
