@@ -11,13 +11,13 @@ import java.util.Queue;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiPredicate;
 
-public interface KineticManager
+public abstract class KineticManager
 {
-    void add(IKineticNode node);
+    public abstract void add(IKineticNode node);
     
-    void remove(IKineticNode node);
+    public abstract void remove(IKineticNode node);
     
-    default void visitNetwork(IKineticNode start, BiPredicate<World, BlockPos> posValidator)
+    public void visitNetwork(IKineticNode start, BiPredicate<World, BlockPos> posValidator)
     {
         Queue<IKineticNode> activeQueue = new ArrayDeque<>();
         activeQueue.add(start);
@@ -28,16 +28,13 @@ public interface KineticManager
             {
                 current.markVisited();
                 current.addNeighbours((node, ratio) -> {
-                    if (node != null && !(node).isVisited())
-                    {
-                        activeQueue.add(node);
-                    }
+                    if (node != null && !(node).isVisited()) activeQueue.add(node);
                 }, posValidator);
             }
         }
     }
     
-    default boolean findNetwork(TObjectFloatMap<IKineticNode> nodes, IKineticNode activeNode, BiPredicate<World, BlockPos> posValidator)
+    public boolean findNetwork(TObjectFloatMap<IKineticNode> nodes, IKineticNode activeNode, BiPredicate<World, BlockPos> posValidator)
     {
         AtomicBoolean failed = new AtomicBoolean(false);
         Queue<Pair<IKineticNode, Float>> activeQueue = new ArrayDeque<>();
@@ -68,7 +65,7 @@ public interface KineticManager
         return !failed.get();
     }
     
-    static void init()
+    public static void init()
     {
         MinecraftForge.EVENT_BUS.register(ServerKineticManager.INSTANCE);
         MinecraftForge.EVENT_BUS.register(ClientKineticManager.INSTANCE);

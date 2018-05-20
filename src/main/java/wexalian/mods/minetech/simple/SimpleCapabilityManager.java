@@ -45,7 +45,7 @@ public enum SimpleCapabilityManager
             }
             catch (Exception e)
             {
-                throw Throwables.propagate(e);
+                e.printStackTrace();
             }
         });
     }

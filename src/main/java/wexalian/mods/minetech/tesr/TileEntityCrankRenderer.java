@@ -1,4 +1,4 @@
-package wexalian.mods.minetech.render.tileentity;
+package wexalian.mods.minetech.tesr;
 
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.ResourceLocation;

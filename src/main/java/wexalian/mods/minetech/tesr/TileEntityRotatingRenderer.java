@@ -1,4 +1,4 @@
-package wexalian.mods.minetech.render.tileentity;
+package wexalian.mods.minetech.tesr;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -14,7 +14,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
-import wexalian.mods.minetech.tileentity.TileEntityShaft;
+import wexalian.mods.minetech.tileentity.mechanical.TileEntityShaft;
 
 public class TileEntityRotatingRenderer extends TileEntitySpecialRenderer<TileEntityShaft>
 {

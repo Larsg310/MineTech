@@ -6,7 +6,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import wexalian.mods.minetech.lib.BlockNames;
-import wexalian.mods.minetech.tileentity.TileEntityKineticGenerator;
+import wexalian.mods.minetech.tileentity.mechanical.TileEntityKineticGenerator;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

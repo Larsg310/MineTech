@@ -29,17 +29,19 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiPredicate;
 
-public enum ServerKineticManager implements KineticManager
+public class ServerKineticManager extends KineticManager
 {
-    INSTANCE;
+    public static final ServerKineticManager INSTANCE = new ServerKineticManager();
     
     private final Set<IKineticNode> nodes = new HashSet<>();
     
+    @Override
     public void add(IKineticNode node)
     {
         nodes.add(node);
     }
     
+    @Override
     public void remove(IKineticNode node)
     {
         nodes.remove(node);

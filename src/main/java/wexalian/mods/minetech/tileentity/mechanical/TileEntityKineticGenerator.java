@@ -1,4 +1,4 @@
-package wexalian.mods.minetech.tileentity;
+package wexalian.mods.minetech.tileentity.mechanical;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;

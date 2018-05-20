@@ -25,8 +25,8 @@ import wexalian.mods.minetech.lib.BlockNames;
 import wexalian.mods.minetech.lib.ItemNames;
 import wexalian.mods.minetech.tileentity.TileEntityCrank;
 import wexalian.mods.minetech.tileentity.TileEntityGrindstone;
-import wexalian.mods.minetech.tileentity.TileEntityKineticGenerator;
-import wexalian.mods.minetech.tileentity.TileEntityShaft;
+import wexalian.mods.minetech.tileentity.mechanical.TileEntityKineticGenerator;
+import wexalian.mods.minetech.tileentity.mechanical.TileEntityShaft;
 
 import java.util.stream.IntStream;
 

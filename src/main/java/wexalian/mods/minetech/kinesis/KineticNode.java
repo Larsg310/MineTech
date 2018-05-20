@@ -159,7 +159,6 @@ public class KineticNode implements IKineticNode
     public void deserializeNBT(NBTTagCompound tag)
     {
         nodeID = tag.getUniqueId("id");
-        System.out.println(nodeID);
     }
     
     @Override

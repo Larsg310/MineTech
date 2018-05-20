@@ -4,10 +4,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
-import wexalian.mods.minetech.render.tileentity.TileEntityCrankRenderer;
-import wexalian.mods.minetech.render.tileentity.TileEntityRotatingRenderer;
+import wexalian.mods.minetech.tesr.TileEntityCrankRenderer;
+import wexalian.mods.minetech.tesr.TileEntityRotatingRenderer;
 import wexalian.mods.minetech.tileentity.TileEntityCrank;
-import wexalian.mods.minetech.tileentity.TileEntityShaft;
+import wexalian.mods.minetech.tileentity.mechanical.TileEntityShaft;
 
 public class ClientProxy implements IProxy
 {

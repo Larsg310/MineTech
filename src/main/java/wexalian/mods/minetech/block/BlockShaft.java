@@ -25,7 +25,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import wexalian.mods.minetech.lib.BlockNames;
-import wexalian.mods.minetech.tileentity.TileEntityShaft;
+import wexalian.mods.minetech.tileentity.mechanical.TileEntityShaft;
 import wexalian.mods.minetech.util.WorldUtil;
 
 import javax.annotation.Nonnull;

@@ -15,18 +15,20 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.UUID;
 
-public enum ClientKineticManager implements KineticManager
+public class ClientKineticManager extends KineticManager
 {
-    INSTANCE;
+    public static final ClientKineticManager INSTANCE = new ClientKineticManager();
     
     private final Set<IKineticNode> nodes = new HashSet<>();
     public final Object2FloatMap<UUID> clientUpdates = new Object2FloatOpenHashMap<>();
     
+    @Override
     public void add(IKineticNode node)
     {
         nodes.add(node);
     }
     
+    @Override
     public void remove(IKineticNode node)
     {
         nodes.remove(node);

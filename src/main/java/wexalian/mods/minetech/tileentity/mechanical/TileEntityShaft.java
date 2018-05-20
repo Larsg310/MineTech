@@ -1,4 +1,4 @@
-package wexalian.mods.minetech.tileentity;
+package wexalian.mods.minetech.tileentity.mechanical;
 
 import net.minecraft.block.BlockRotatedPillar;
 import net.minecraft.nbt.NBTTagCompound;
@@ -12,6 +12,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import wexalian.mods.minetech.kinesis.IKineticNode;
 import wexalian.mods.minetech.kinesis.IShaftAttachable;
 import wexalian.mods.minetech.kinesis.KineticNode;
+import wexalian.mods.minetech.tileentity.TileEntityRotating;
 import wexalian.mods.minetech.util.ObjFloatConsumer;
 
 import javax.annotation.Nonnull;
