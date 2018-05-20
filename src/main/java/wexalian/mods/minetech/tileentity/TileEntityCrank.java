@@ -16,10 +16,7 @@ public class TileEntityCrank extends TileEntity implements ITickable
     @Override
     public void update()
     {
-        if (crankTime > 0)
-        {
-            crankTime--;
-        }
+        if (crankTime > 0) crankTime--;
     }
     
     public boolean tryCrank()
@@ -36,10 +33,9 @@ public class TileEntityCrank extends TileEntity implements ITickable
     {
         if (crankTime != 0) return false;
         TileEntityGrindstone tile = WorldUtil.getTileEntity(world, pos.down());
-        //@formatter:off
-        return IntStream.range(0, tile.inventory.getSlots())
-                        .anyMatch(slot -> !GrindstoneRecipes.instance().getGrindingResult(tile.inventory.getStackInSlot(slot)).isEmpty());
-        //@formatter:on
+        
+        return IntStream.range(0, tile.inventory.getSlots())//
+                        .anyMatch(slot -> !GrindstoneRecipes.instance().getGrindingResult(tile.inventory.getStackInSlot(slot)).isEmpty());//
     }
     
     private void crank()
