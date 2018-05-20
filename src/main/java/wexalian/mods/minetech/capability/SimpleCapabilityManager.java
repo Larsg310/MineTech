@@ -1,6 +1,5 @@
-package wexalian.mods.minetech.simple;
+package wexalian.mods.minetech.capability;
 
-import com.google.common.base.Throwables;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;

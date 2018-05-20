@@ -16,7 +16,7 @@ import wexalian.mods.minetech.lib.Reference;
 import wexalian.mods.minetech.network.PacketKineticUpdate;
 import wexalian.mods.minetech.proxy.IProxy;
 import wexalian.mods.minetech.recipe.SmeltingRecipes;
-import wexalian.mods.minetech.simple.SimpleCapabilityManager;
+import wexalian.mods.minetech.capability.SimpleCapabilityManager;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, dependencies = Reference.MOD_DEPENDENCIES)
 public class MineTech

@@ -1,4 +1,4 @@
-package wexalian.mods.minetech.simple;
+package wexalian.mods.minetech.capability;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
