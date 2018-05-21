@@ -18,4 +18,7 @@ public class ModBlocks
     
     @Nonnull
     public static Block SHAFT;
+    
+    @Nonnull
+    public static Block GEAR;
 }

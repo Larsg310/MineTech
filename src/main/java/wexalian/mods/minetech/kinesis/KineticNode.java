@@ -179,4 +179,17 @@ public class KineticNode implements IKineticNode
             }
         }
     }
-}
+    
+    public static void findGear(World world, BlockPos pos, EnumFacing face, EnumFacing side, float ratio, ObjFloatConsumer<IKineticNode> neighbors, BiPredicate<World, BlockPos> posValidator)
+    {
+        pos = pos.offset(side);
+        if (posValidator.test(world, pos))
+        {
+            TileEntity te = world.getTileEntity(pos);
+            if (te != null && te.hasCapability(IGearAttachable.CAPABILITY, side.getOpposite()))
+            {
+                neighbors.accept(Objects.requireNonNull(te.getCapability(IGearAttachable.CAPABILITY, side.getOpposite())).getNode(face), ratio);
+            }
+        }}
+        
+    }

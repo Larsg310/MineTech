@@ -6,6 +6,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import wexalian.mods.minetech.tesr.TileEntityRotatingRenderer;
 import wexalian.mods.minetech.tileentity.TileEntityCrank;
+import wexalian.mods.minetech.tileentity.mechanical.TileEntityGear;
 import wexalian.mods.minetech.tileentity.mechanical.TileEntityShaft;
 
 public class ClientProxy implements IProxy
@@ -15,6 +16,7 @@ public class ClientProxy implements IProxy
     {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCrank.class, new TileEntityRotatingRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityShaft.class, new TileEntityRotatingRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityGear.class, new TileEntityRotatingRenderer());
     }
     
     @Override

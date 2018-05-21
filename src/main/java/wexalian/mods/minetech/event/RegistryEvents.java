@@ -6,6 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -13,6 +14,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import wexalian.mods.minetech.block.BlockCrank;
+import wexalian.mods.minetech.block.BlockGear;
 import wexalian.mods.minetech.block.BlockGrindstone;
 import wexalian.mods.minetech.block.BlockKineticGenerator;
 import wexalian.mods.minetech.block.BlockShaft;
@@ -23,8 +25,10 @@ import wexalian.mods.minetech.item.ItemOreDust;
 import wexalian.mods.minetech.item.ItemPan;
 import wexalian.mods.minetech.lib.BlockNames;
 import wexalian.mods.minetech.lib.ItemNames;
+import wexalian.mods.minetech.lib.Reference;
 import wexalian.mods.minetech.tileentity.TileEntityCrank;
 import wexalian.mods.minetech.tileentity.TileEntityGrindstone;
+import wexalian.mods.minetech.tileentity.mechanical.TileEntityGear;
 import wexalian.mods.minetech.tileentity.mechanical.TileEntityKineticGenerator;
 import wexalian.mods.minetech.tileentity.mechanical.TileEntityShaft;
 
@@ -52,6 +56,10 @@ public class RegistryEvents
         ModBlocks.SHAFT = new BlockShaft();
         event.getRegistry().register(ModBlocks.SHAFT);
         GameRegistry.registerTileEntity(TileEntityShaft.class, BlockNames.SHAFT);
+        
+        ModBlocks.GEAR = new BlockGear();
+        event.getRegistry().register(ModBlocks.GEAR);
+        GameRegistry.registerTileEntity(TileEntityGear.class, BlockNames.GEAR);
     }
     
     @SubscribeEvent
@@ -83,16 +91,24 @@ public class RegistryEvents
         ItemBlock shaft = new ItemBlock(ModBlocks.SHAFT);
         shaft.setRegistryName(BlockNames.SHAFT);
         event.getRegistry().register(shaft);
+        
+        ItemBlock gear = new ItemBlock(ModBlocks.GEAR);
+        gear.setRegistryName(BlockNames.GEAR);
+        event.getRegistry().register(gear);
     }
     
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public static void registerModels(ModelRegistryEvent event)
     {
+        //OBJ LOADER
+        OBJLoader.INSTANCE.addDomain(Reference.MOD_ID);
+        
         //ITEMBLOCK MODELS
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.GRINDSTONE), 0, new ModelResourceLocation(BlockNames.GRINDSTONE, "inventory"));
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.CRANK), 0, new ModelResourceLocation(BlockNames.CRANK, "inventory"));
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.SHAFT), 0, new ModelResourceLocation(BlockNames.SHAFT, "inventory"));
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.GEAR), 0, new ModelResourceLocation(BlockNames.GEAR, "inventory"));
         
         //ITEM MODELS
         IntStream.range(0, ItemDirtyOreDust.TYPES.size()).forEach(meta -> ModelLoader.setCustomModelResourceLocation(ModItems.DIRTY_ORE_DUST, meta, new ModelResourceLocation(ItemNames.DIRTY_ORE_DUST + "_" + ItemDirtyOreDust.TYPES.get(meta).getName(), "inventory")));
