@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.function.BiPredicate;
 
-public class TileEntityShaft extends TileEntityRotatingNode implements IKineticNode.Host
+public class TileEntityShaft extends TileEntityRotatingNode
 {
     private KineticNode node = new KineticNode(this);
     
