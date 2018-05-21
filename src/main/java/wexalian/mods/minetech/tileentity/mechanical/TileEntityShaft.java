@@ -4,6 +4,7 @@ import net.minecraft.block.BlockRotatedPillar;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -19,58 +20,14 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.function.BiPredicate;
 
-public class TileEntityShaft extends TileEntityRotating implements IKineticNode.Host
+public class TileEntityShaft extends TileEntityRotatingNode implements IKineticNode.Host
 {
     private KineticNode node = new KineticNode(this);
     
     @Override
-    public void validate()
+    public IKineticNode getNode()
     {
-        node.validate(getWorld().isRemote);
-        super.validate();
-    }
-    
-    @Override
-    public void onLoad()
-    {
-        node.validate(getWorld().isRemote);
-        super.onLoad();
-    }
-    
-    @Override
-    public void invalidate()
-    {
-        node.invalidate();
-        super.invalidate();
-    }
-    
-    @Override
-    public void onChunkUnload()
-    {
-        node.invalidate();
-        super.onChunkUnload();
-    }
-    
-    @Override
-    @Nonnull
-    public NBTTagCompound writeToNBT(NBTTagCompound compound)
-    {
-        super.writeToNBT(compound);
-        compound.setTag("node", node.serializeNBT());
-        return compound;
-    }
-    
-    @Override
-    public void readFromNBT(NBTTagCompound compound)
-    {
-        super.readFromNBT(compound);
-        node.deserializeNBT(compound.getCompoundTag("node"));
-    }
-    
-    @Override
-    public ChunkPos getChunkPos()
-    {
-        return new ChunkPos(getPos());
+        return node;
     }
     
     @Override
@@ -91,27 +48,6 @@ public class TileEntityShaft extends TileEntityRotating implements IKineticNode.
         EnumFacing.Axis axis = getWorld().getBlockState(getPos()).getValue(BlockRotatedPillar.AXIS);
         KineticNode.findShaft(getWorld(), getPos(), EnumFacing.getFacingFromAxis(EnumFacing.AxisDirection.NEGATIVE, axis), 1F, neighbours, posValidator);
         KineticNode.findShaft(getWorld(), getPos(), EnumFacing.getFacingFromAxis(EnumFacing.AxisDirection.POSITIVE, axis), 1F, neighbours, posValidator);
-    }
-    
-    @Override
-    @Nullable
-    public SPacketUpdateTileEntity getUpdatePacket()
-    {
-        return new SPacketUpdateTileEntity(this.pos, 3, this.getUpdateTag());
-    }
-    
-    @Nonnull
-    @Override
-    public NBTTagCompound getUpdateTag()
-    {
-        return this.writeToNBT(new NBTTagCompound());
-    }
-    
-    @Override
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
-    {
-        NBTTagCompound tag = pkt.getNbtCompound();
-        handleUpdateTag(tag);
     }
     
     @SuppressWarnings("ConstantConditions")
@@ -137,6 +73,9 @@ public class TileEntityShaft extends TileEntityRotating implements IKineticNode.
     @Override
     public float getAngle(float partialTicks)
     {
+        EnumFacing negative = EnumFacing.getFacingFromAxis(EnumFacing.AxisDirection.NEGATIVE, getWorld().getBlockState(getPos()).getValue(BlockRotatedPillar.AXIS));
+        TileEntity tile = getWorld().getTileEntity(pos.offset(negative));
+        if (tile instanceof TileEntityShaft) return ((TileEntityShaft) tile).getAngle(partialTicks);
         return node.getAngle(partialTicks);
     }
     
