@@ -53,7 +53,7 @@ public class TileEntityCrank extends TileEntityRotating implements ITickable
     @Override
     public float getAngle(float partialTicks)
     {
-        if (isCranking()) return 360F / MAX_CRANK_TIME * crankTime;
+        if (isCranking()) return 18F * crankTime - 18F * partialTicks;
         return 0F;
     }
     
