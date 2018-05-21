@@ -50,7 +50,7 @@ public class TileEntityGear extends TileEntityRotatingNode
         EnumFacing face = getWorld().getBlockState(getPos()).getValue(BlockGear.FACING);
         
         if (capability == IShaftAttachable.CAPABILITY && facing == face) return true;
-        else if (capability == IGearAttachable.CAPABILITY && facing.getAxis() != face.getAxis()) return true;// TODO: Make pretty
+        else if (capability == IGearAttachable.CAPABILITY && facing == face) return true;// TODO: Make pretty
         return super.hasCapability(capability, facing);
     }
     
@@ -61,7 +61,7 @@ public class TileEntityGear extends TileEntityRotatingNode
         EnumFacing face = getWorld().getBlockState(getPos()).getValue(BlockGear.FACING);
         
         if (capability == IShaftAttachable.CAPABILITY && facing == face) return (T) (IShaftAttachable) () -> node;
-        else if (capability == IGearAttachable.CAPABILITY && facing.getAxis() != face.getAxis()) return (T) (IGearAttachable) f -> f == face ? node : null;
+        else if (capability == IGearAttachable.CAPABILITY && facing == face) return (T) (IGearAttachable) f -> f == face ? node : null;
         
         return super.getCapability(capability, facing);
     }
@@ -69,7 +69,14 @@ public class TileEntityGear extends TileEntityRotatingNode
     @Override
     public float getAngle(float partialTicks)
     {
-        return node.getAngle(partialTicks);
+        boolean rotateExtra = (getPos().getX() + getPos().getY() + getPos().getZ() + getBlockMetadata()) % 2 == 1;
+        return node.getAngle(partialTicks) + (rotateExtra ? 22.5F : 0);
+    }
+    
+    @Override
+    public float getScale()
+    {
+        return 1F;
     }
     
     @Nonnull

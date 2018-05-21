@@ -37,7 +37,7 @@ public class TileEntityKineticGenerator extends TileEntityNode
                                            .map(f -> Pair.of(f, getWorld().getTileEntity(getPos().offset(f))))//
                                            .filter(f -> f.getRight() != null)//
                                            .anyMatch(f -> f.getRight().hasCapability(IShaftAttachable.CAPABILITY, f.getLeft().getOpposite()));
-        return shouldProducePower ? 20 : 0;
+        return shouldProducePower ? 50 : 0;
     }
     
     @Override
@@ -50,7 +50,7 @@ public class TileEntityKineticGenerator extends TileEntityNode
     @Override
     public boolean hasCapability(@Nonnull Capability<?> capability, EnumFacing facing)
     {
-        if (facing == EnumFacing.UP && capability == IShaftAttachable.CAPABILITY) return true;
+        if (capability == IShaftAttachable.CAPABILITY) return true;
         return super.hasCapability(capability, facing);
     }
     
@@ -58,7 +58,7 @@ public class TileEntityKineticGenerator extends TileEntityNode
     @Override
     public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing facing)
     {
-        if (facing == EnumFacing.UP && capability == IShaftAttachable.CAPABILITY) return (T) (IShaftAttachable) () -> node;
+        if (capability == IShaftAttachable.CAPABILITY) return (T) (IShaftAttachable) () -> node;
         return super.getCapability(capability, facing);
     }
 }

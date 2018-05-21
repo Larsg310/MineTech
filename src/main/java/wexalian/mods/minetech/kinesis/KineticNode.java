@@ -186,9 +186,9 @@ public class KineticNode implements IKineticNode
         if (posValidator.test(world, pos))
         {
             TileEntity te = world.getTileEntity(pos);
-            if (te != null && te.hasCapability(IGearAttachable.CAPABILITY, side.getOpposite()))
+            if (te != null && te.hasCapability(IGearAttachable.CAPABILITY, face))
             {
-                neighbors.accept(Objects.requireNonNull(te.getCapability(IGearAttachable.CAPABILITY, side.getOpposite())).getNode(face), ratio);
+                neighbors.accept(Objects.requireNonNull(te.getCapability(IGearAttachable.CAPABILITY, face)).getNode(face), ratio);
             }
         }}
         
