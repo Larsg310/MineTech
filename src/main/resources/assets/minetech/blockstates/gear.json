@@ -4,7 +4,7 @@
         "textures": {
             "particle": "minecraft:blocks/planks_oak"
         },
-        "model": "minetech:gear.obj",
+        "model": "minetech:gear/gear.obj",
         "transform": "forge:default-block"
     },
     "variants": {
