@@ -1,0 +1,20 @@
+{
+    "language.name": "English",
+    "language.region": "United States",
+    "language.code": "en_us",
+    
+    "block.minetech.grindstone": "Grindstone",
+    "block.minetech.crank": "Crank",
+    "block.minetech.shaft": "Wooden Shaft",
+    
+    "item.minetech.dirty_ore_dust_iron": "Dirty Iron Dust",
+    "item.minetech.dirty_ore_dust_gold": "Dirty Gold Dust",
+    
+    "item.minetech.ore_dust_iron": "Iron Dust",
+    "item.minetech.ore_dust_gold": "Gold Dust",
+    
+    "item.minetech.pan": "Pan",
+    
+    "tooltip.minetech.progress": "Progress: %d%%",
+    "tooltip.minetech.panning": "Currently Panning: %s"
+}

@@ -1,4 +1,8 @@
 {
+    "textures": {
+        "planks": "minecraft:block/oak_planks",
+        "particle": "minecraft:block/oak_planks"
+    },
     "elements": [
         {
             "from": [ 7, 0, 7 ],

@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "south": "minetech:block/grindstone_side",
+        "east": "minetech:block/grindstone_side",
+        "west": "minetech:block/grindstone_side",
+        "north": "minetech:block/grindstone_front",
+        "up": "minetech:block/grindstone_top",
+        "down": "minecraft:block/furnace_top",
+        "particle": "minetech:block/grindstone_side"
+    }
+}

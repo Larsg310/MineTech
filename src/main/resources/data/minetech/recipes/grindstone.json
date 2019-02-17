@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "SSS",
+        "SFS",
+        "CCC"
+    ],
+    "key": {
+        "C": {
+            "tag": "forge:cobblestone"
+        },
+        "S": {
+            "tag": "forge:stone"
+        },
+        "F": {
+            "item": "minecraft:flint"
+        }
+    },
+    "result": {
+        "item": "minetech:grindstone",
+        "count": 1
+    }
+}

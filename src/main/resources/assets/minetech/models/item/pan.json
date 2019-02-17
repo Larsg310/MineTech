@@ -1,9 +1,9 @@
 {
 	"textures": {
-		"water": "minecraft:blocks/water_still",
-		"pan": "minetech:items/pan",
-		"planks": "minecraft:blocks/planks_oak",
-		"particle": "minecraft:blocks/planks_oak"
+		"water": "minecraft:block/water_still",
+		"pan": "minetech:item/pan",
+		"planks": "minecraft:block/planks_oak",
+		"particle": "minecraft:block/planks_oak"
 	},
 	"elements": [
 		{
