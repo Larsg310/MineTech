@@ -1,32 +1,36 @@
 package com.wexalian.mods.minetech.proxy;
 
-import com.wexalian.mods.minetech.gui.GuiGrindstone;
-import com.wexalian.mods.minetech.tesr.TileEntityRotatingRenderer;
-import com.wexalian.mods.minetech.tileentity.TileEntityCrank;
-import com.wexalian.mods.minetech.tileentity.TileEntityGrindstone;
+import com.wexalian.mods.minetech.lib.Reference;
+import com.wexalian.mods.minetech.render.*;
+import com.wexalian.mods.minetech.tileentity.*;
+import com.wexalian.mods.minetech.tileentity.kinetic.TileEntityGear;
+import com.wexalian.mods.minetech.tileentity.kinetic.TileEntityShaft;
+import com.wexalian.mods.minetech.tileentity.kinetic.TileEntityWaterWheel;
+import com.wexalian.mods.minetech.tileentity.multiblock.TileEntityOreMill;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.ExtensionPoint;
-import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraft.world.biome.BiomeColors;
+import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public class ClientProxy implements IProxy
 {
     @Override
-    public void registerTileEntityRenderers()
+    public void registerRenderers()
     {
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCrank.class, new TileEntityRotatingRenderer());
+        OBJLoader.INSTANCE.addDomain(Reference.MOD_ID);
+        
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRotating.class, new TileEntityRotatingRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBelt.class, new TileEntityBeltRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityGear.class, new TileEntityGearRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityShaft.class, new TileEntityShaftRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityWaterWheel.class, new TileEntityWaterWheelRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityOreMill.class, new TileEntityOreMillRenderer());
     }
     
     @Override
-    public void registerGuis()
+    public int getWaterColor()
     {
-        ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.GUIFACTORY, () -> p -> {
-            PacketBuffer buffer = p.getAdditionalData();
-            BlockPos pos = new BlockPos(buffer.readInt(), buffer.readInt(), buffer.readInt());
-            return new GuiGrindstone((TileEntityGrindstone) Minecraft.getInstance().world.getTileEntity(pos), Minecraft.getInstance().player.inventory);
-        });
+        return BiomeColors.getWaterColor(Minecraft.getInstance().world, Minecraft.getInstance().player.getPosition());
     }
     
 }

@@ -2,7 +2,7 @@ package com.wexalian.mods.minetech.proxy;
 
 public interface IProxy
 {
-    default void registerTileEntityRenderers() {}
+    default void registerRenderers() {}
     
-    default void registerGuis() {}
+    default int getWaterColor() {return -1;}
 }

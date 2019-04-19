@@ -1,7 +1,7 @@
-Ore Processing:
+Ore Processing Line:
     1x[Ore] -> 1x[Ingot]                            [Smelting]      Total: 1x
     1x[Ore] -> 2x[Dirty Ore Dust]:                  [Crushing]
-        1x[Dirty Ore Dust] -> 1x[Ore Dust]          [Cleaning]
+        1x[Dirty Ore Dust] -> 1x[Ore Dust]          [Washing]
             1x[Ore Dust] -> 1x[Ingot]               [Smelting]      Total: 2x
             1x[Ore Dust] -> 1.5x[Liquid]            [Melting]
                 1x[Liquid] -> 1x[Ingot]             [Casting]       Total: 3x
@@ -25,7 +25,6 @@ Liquids:
 Smelting:
 [x] Furnace (Vanilla)
 
-Crushing:
 [x] Grindstone
 [ ] Crusher
 

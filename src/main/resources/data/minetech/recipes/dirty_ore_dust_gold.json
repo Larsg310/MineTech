@@ -1,0 +1,10 @@
+{
+    "type": "minetech:grinding",
+    "ingredient": {
+        "item": "minecraft:gold_ore"
+    },
+    "result": {
+        "item": "minetech:dirty_ore_dust_gold",
+        "count": 2
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "type": "minetech:washing",
+    "ingredient": {
+        "item": "minetech:dirty_ore_dust_gold"
+    },
+    "result": {
+        "item": "minetech:clean_ore_dust_gold",
+        "count": 1
+    }
+}

@@ -1,11 +1,8 @@
 buildscript {
     repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
         jcenter()
         mavenCentral()
-        maven {
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
-        }
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
@@ -13,10 +10,12 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle'
 
-apply plugin: 'eclipse'
+// Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
+//apply plugin: 'maven-publish'
+
 
 def minecraft_version = '1.13.2'
-def forge_version = minecraft_version + '-25.0.23'
+def forge_version = minecraft_version + '-25.0.145'
 
 version = 'unreleased-' + minecraft_version
 group = 'com.wexalian.mods'
@@ -28,19 +27,42 @@ compileJava {
     sourceCompatibility = targetCompatibility = '1.8'
 }
 
+
 minecraft {
-    mappings channel: 'snapshot', version: '20190206-1.13.1'/* + minecraft_version*/
+    mappings channel: 'snapshot', version: '20190416-' + minecraft_version
 
 
-    //noinspection GroovyAssignabilityCheck
     runs {
-        client = {
-            workingDirectory project.file('run').canonicalPath
-            source sourceSets.main
+        client {
+            workingDirectory project.file('run/client')
+
+            // Recommended logging data for a userdev environment
+//            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                minetech {
+                    source sourceSets.main
+                }
+            }
         }
 
-        server = {
-            workingDirectory project.file('run').canonicalPath
+        server {
+            workingDirectory project.file('run/server')
+
+            // Recommended logging data for a userdev environment
+//            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                minetech {
+                    source sourceSets.main
+                }
+            }
         }
     }
 }
@@ -50,10 +72,8 @@ dependencies {
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
 
-    // http://files.minecraftforge.net/maven/net/minecraftforge/test/forge/index_1.13.html
-
     minecraft 'net.minecraftforge:forge:' + forge_version
-    compile 'net.minecraftforge:forge:' + forge_version +':launcher'
+    compile 'net.minecraftforge:forge:' + forge_version + ':launcher'
 
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..
@@ -78,21 +98,40 @@ dependencies {
 
 }
 
-processResources {
-    // this will ensure that this task is redone when the versions change.
-    inputs.property 'version', project.version
-    inputs.property 'mcversion', minecraft_version
-
-    // replace stuff in mcmod.toml, nothing else
-    from(sourceSets.main.resources.srcDirs) {
-        include 'META_INF/mods.toml'
-
-        // replace version and mcversion
-        expand 'version': project.version, 'mcversion': minecraft_version
-    }
-
-    // copy everything else except the mods.toml
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'META_INF/mods.toml'
+// Example for how to get properties into the manifest for reading by the runtime..
+jar {
+    manifest {
+        attributes([
+                "Specification-Title"     : "minetech",
+                "Specification-Vendor"    : "Wexalian",
+                "Specification-Version"   : "1", // /.
+                "Implementation-Title"    : project.name,
+                "Implementation-Version"  : "${version}",
+                "Implementation-Vendor"   : "Wexalian",
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
     }
 }
+
+
+// Example configuration to allow publishing using the maven-publish task
+// we define a custom artifact that is sourced from the reobfJar output task
+// and then declare that to be published
+// Note you'll need to add a repository here
+//def reobfFile = file("$buildDir/reobfJar/output.jar")
+//def reobfArtifact = artifacts.add('default', reobfFile) {
+//    type 'jar'
+//    builtBy 'reobfJar'
+//}
+//publishing {
+//    publications {
+//        mavenJava(MavenPublication) {
+//            artifact reobfArtifact
+//        }
+//    }
+//    repositories {
+//        maven {
+//            url "file:///${project.projectDir}/mcmodsrepo"
+//        }
+//    }
+//}

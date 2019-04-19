@@ -1,6 +1,8 @@
 package com.wexalian.mods.minetech.block;
 
-import io.netty.buffer.Unpooled;
+import com.wexalian.mods.minetech.container.ContainerGrindstone;
+import com.wexalian.mods.minetech.lib.BlockNames;
+import com.wexalian.mods.minetech.tileentity.TileEntityGrindstone;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
@@ -10,7 +12,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
@@ -23,9 +24,6 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
-import com.wexalian.mods.minetech.container.ContainerGrindstone;
-import com.wexalian.mods.minetech.lib.BlockNames;
-import com.wexalian.mods.minetech.tileentity.TileEntityGrindstone;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -39,7 +37,6 @@ public class BlockGrindstone extends Block
         super(Properties.create(Material.ROCK));
         setRegistryName(BlockNames.GRINDSTONE);
         setDefaultState(getStateContainer().getBaseState().with(FACING, EnumFacing.NORTH));
-        // getTranslationKey()
     }
     
     @Override
@@ -61,8 +58,7 @@ public class BlockGrindstone extends Block
     {
         if (!world.isRemote)
         {
-            PacketBuffer buffer = new PacketBuffer(Unpooled.buffer().writeInt(pos.getX()).writeInt(pos.getY()).writeInt(pos.getZ()));
-            NetworkHooks.openGui((EntityPlayerMP) player, new Grindstone(world, pos), buffer);
+            NetworkHooks.openGui((EntityPlayerMP) player, new Grindstone(world, pos), buf -> buf.writeBlockPos(pos));
         }
         return true;
     }
@@ -95,14 +91,14 @@ public class BlockGrindstone extends Block
         @Override
         public Container createContainer(@Nonnull InventoryPlayer playerInventory, @Nonnull EntityPlayer player)
         {
-            return new ContainerGrindstone((TileEntityGrindstone) world.getTileEntity(pos), playerInventory);
+            return new ContainerGrindstone(world, pos, player);
         }
         
         @Nonnull
         @Override
         public String getGuiID()
         {
-            return "minetech:grindstone";
+            return BlockNames.GRINDSTONE.toString();
         }
         
         @Nonnull
@@ -124,5 +120,6 @@ public class BlockGrindstone extends Block
         {
             return null;
         }
+        
     }
 }

@@ -3,13 +3,13 @@
 # The overall format is standard TOML format, v0.5.0.
 # Note that there are a couple of TOML lists in this file.
 # Find more information on toml format here:  https://github.com/toml-lang/toml
-# The name of the mod loader type to load - for regular FML @Mod mods it should be javafml
+# The name of the mod loader type to register - for regular FML @Mod mods it should be javafml
 modLoader="javafml" #mandatory
 
 # A version range to match for said mod loader - for regular FML @Mod it will be the forge version
 loaderVersion="[24,)" #mandatory (24 is current forge version)
 
-# A URL to query for updates for this mod. See the JSON update specification <here>
+# A URL to query for updates for this mod. See the EXTENSION update specification <here>
 #updateJSONURL="http://myurl.me/" #optional
 
 # A URL to refer people to when problems occur with this mod

@@ -1,0 +1,6 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "minetech:item/clean_ore_dust_gold"
+    }
+}

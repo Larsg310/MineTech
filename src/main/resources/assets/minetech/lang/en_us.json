@@ -6,14 +6,18 @@
     "block.minetech.grindstone": "Grindstone",
     "block.minetech.crank": "Crank",
     "block.minetech.shaft": "Wooden Shaft",
+    "block.minetech.water_wheel": "Water Wheel",
+    "block.minetech.leather_belt": "Leather Belt",
     
     "item.minetech.dirty_ore_dust_iron": "Dirty Iron Dust",
     "item.minetech.dirty_ore_dust_gold": "Dirty Gold Dust",
     
-    "item.minetech.ore_dust_iron": "Iron Dust",
-    "item.minetech.ore_dust_gold": "Gold Dust",
+    "item.minetech.clean_ore_dust_iron": "Iron Dust",
+    "item.minetech.clean_ore_dust_gold": "Gold Dust",
     
     "item.minetech.pan": "Pan",
+    
+    "itemGroup.minetech": "MineTech",
     
     "tooltip.minetech.progress": "Progress: %d%%",
     "tooltip.minetech.panning": "Currently Panning: %s"

@@ -26,7 +26,12 @@ public abstract class TileEntityRotating extends TileEntity
     
     public float getScale()
     {
-        return 1.0f;
+        return 1F;
+    }
+    
+    public int getTurnDirection()
+    {
+        return 1;
     }
     
 }

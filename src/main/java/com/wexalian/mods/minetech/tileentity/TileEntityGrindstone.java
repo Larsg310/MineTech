@@ -1,21 +1,28 @@
 package com.wexalian.mods.minetech.tileentity;
 
+import com.wexalian.mods.minetech.container.IDummyInventory;
+import com.wexalian.mods.minetech.init.MineTechRecipes;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.items.ItemStackHandler;
-import com.wexalian.mods.minetech.crafting.GrindstoneRecipes;
 
 import javax.annotation.Nonnull;
 
 public class TileEntityGrindstone extends TileEntity implements ITickable
 {
     public static final int MAX_PROGRESS = 160;
-    public static final String NBT_KEY_PROGRESS = "minetech:progress";
-    public static final String NBT_KEY_INVENTORY = "minetech:inventory";
+    private static final String NBT_KEY_PROGRESS_ARRAY = "minetech:progress_array";
+    private static final String NBT_KEY_PROGRESS_WHEEL = "minetech:progress_wheel";
+    private static final String NBT_KEY_INVENTORY = "minetech:inventory";
     public static TileEntityType<TileEntityGrindstone> TYPE;
+    
     private ItemStackHandler inventory = new ItemStackHandler(8)
     {
         @Override
@@ -24,48 +31,66 @@ public class TileEntityGrindstone extends TileEntity implements ITickable
             return 1;
         }
     };
-    private int progress = 0;
+    
+    private IInventory[] recipeInventories = new IInventory[8];
+    
+    private int[] progress = new int[8];
+    private int wheelProgress = 0;
     
     public TileEntityGrindstone()
     {
         super(TYPE);
+        for (int slot = 0; slot < inventory.getSlots(); slot++)
+        {
+            recipeInventories[slot] = new DummyInventory(slot);
+        }
     }
     
     @Override
     public void tick()
     {
-        processTick();
-        if (canFinish())
-        {
-            processFinish();
-        }
-    }
-    
-    private void processTick()
-    {
         if (getWorld() != null)
         {
-            // TileEntity tile = getWorld().getTileEntity(pos.up());
-            // if (tile instanceof TileEntityCrank) //TODO
-            // {
-            //     if (((TileEntityCrank) tile).isCranking()) progress += 1;
-            // }
+            TileEntity tile = getWorld().getTileEntity(pos.up());
+            if (tile instanceof TileEntityCrank)
+            {
+                if (((TileEntityCrank) tile).isCranking())
+                {
+                    for (int slot = 0; slot < inventory.getSlots(); slot++)
+                    {
+                        tickProcess(slot);
+                        if (canFinish(slot))
+                        {
+                            finishProcess(slot);
+                        }
+                    }
+                    wheelProgress = (wheelProgress + 1) % MAX_PROGRESS;
+                }
+            }
         }
     }
     
-    private boolean canFinish()
+    private void tickProcess(int slot)
     {
-        return progress >= MAX_PROGRESS;
+        if (inventory.getStackInSlot(slot).isEmpty()) progress[slot] = 0;
+        else progress[slot]++;
     }
     
-    private void processFinish()
+    private boolean canFinish(int slot)
     {
-        for (int slot = 0; slot < inventory.getSlots(); slot++)
+        return progress[slot] >= MAX_PROGRESS;
+    }
+    
+    private void finishProcess(int slot)
+    {
+        IRecipe recipe = this.world.getRecipeManager().getRecipe(recipeInventories[slot], this.world, MineTechRecipes.GRINDING);
+        if (recipe != null)
         {
-            ItemStack result = GrindstoneRecipes.instance().getGrindingResult(inventory.getStackInSlot(slot)).copy();
+            ItemStack result = recipe.getCraftingResult(recipeInventories[slot]);
+            
             if (!result.isEmpty()) inventory.setStackInSlot(slot, result);
+            progress[slot] -= MAX_PROGRESS;
         }
-        progress -= MAX_PROGRESS;
     }
     
     @Override
@@ -73,7 +98,9 @@ public class TileEntityGrindstone extends TileEntity implements ITickable
     {
         super.read(nbt);
         inventory.deserializeNBT(nbt.getCompound(NBT_KEY_INVENTORY));
-        progress = nbt.getInt(NBT_KEY_PROGRESS);
+        progress = nbt.getIntArray(NBT_KEY_PROGRESS_ARRAY);
+        if (progress.length == 0) progress = new int[8];
+        wheelProgress = nbt.getInt(NBT_KEY_PROGRESS_WHEEL);
     }
     
     @Nonnull
@@ -82,20 +109,29 @@ public class TileEntityGrindstone extends TileEntity implements ITickable
     {
         super.write(nbt);
         nbt.put(NBT_KEY_INVENTORY, inventory.serializeNBT());
-        nbt.putInt(NBT_KEY_PROGRESS, progress);
+        nbt.putIntArray(NBT_KEY_PROGRESS_ARRAY, progress);
+        nbt.putInt(NBT_KEY_PROGRESS_WHEEL, wheelProgress);
         return nbt;
     }
     
-    public boolean canGrind()
+    boolean canGrind()
     {
         for (int slot = 0; slot < inventory.getSlots(); slot++)
         {
-            if (GrindstoneRecipes.instance().hasGrindingResult(inventory.getStackInSlot(slot)))
+            IRecipe recipe = this.world.getRecipeManager().getRecipe(recipeInventories[slot], this.world, MineTechRecipes.GRINDING);
+            if (recipe != null)
             {
-                return true;
+                ItemStack result = recipe.getCraftingResult(recipeInventories[slot]);
+                
+                if (!result.isEmpty()) return true;
             }
         }
         return false;
+    }
+    
+    public void setProgress(int wheelProgress)
+    {
+        this.wheelProgress = wheelProgress;
     }
     
     public ItemStackHandler getInventory()
@@ -103,13 +139,80 @@ public class TileEntityGrindstone extends TileEntity implements ITickable
         return inventory;
     }
     
-    public int getProgress()
+    public int getWheelProgress()
     {
-        return progress;
+        return wheelProgress;
     }
     
-    public void setProgress(int progress)
+    private class DummyInventory implements IDummyInventory
     {
-        this.progress = progress;
+        // private IItemHandler handler;
+        private int slot;
+        
+        DummyInventory(int slot)
+        {
+            this.slot = slot;
+        }
+        
+        @Nonnull
+        @Override
+        public ITextComponent getName()
+        {
+            return new TextComponentString("Grindstone");
+        }
+        
+        @Override
+        public int getSizeInventory()
+        {
+            return 1;
+        }
+        
+        @Override
+        public boolean isEmpty()
+        {
+            return inventory.getStackInSlot(slot).isEmpty();
+        }
+        
+        @Nonnull
+        @Override
+        public ItemStack getStackInSlot(int index)
+        {
+            return inventory.getStackInSlot(slot);
+        }
+        
+        @Nonnull
+        @Override
+        public ItemStack decrStackSize(int index, int count)
+        {
+            return inventory.extractItem(slot, count, false);
+        }
+        
+        @Nonnull
+        @Override
+        public ItemStack removeStackFromSlot(int index)
+        {
+            ItemStack stack = inventory.getStackInSlot(slot);
+            inventory.setStackInSlot(slot, ItemStack.EMPTY);
+            return stack;
+        }
+        
+        @Override
+        public void setInventorySlotContents(int index, @Nonnull ItemStack stack)
+        {
+            inventory.setStackInSlot(slot, stack);
+        }
+        
+        @Override
+        public int getInventoryStackLimit()
+        {
+            return inventory.getSlotLimit(slot);
+        }
+        
+        @Override
+        public boolean isItemValidForSlot(int index, @Nonnull ItemStack stack)
+        {
+            return inventory.isItemValid(slot, stack);
+        }
+        
     }
 }

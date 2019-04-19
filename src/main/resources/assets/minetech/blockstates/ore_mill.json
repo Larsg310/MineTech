@@ -1,0 +1,9 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "state": {
+            "0": { "model": "minetech:ore_mill_base" },
+            "1": { "model": "minetech:ore_mill_wheel" }
+        }
+    }
+}

@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "minetech:clean_ore_dust_iron",
+    "minetech:clean_ore_dust_gold"
+  ]
+}

@@ -1,11 +1,7 @@
 {
     "forge_marker": 1,
     "defaults": {
-        "textures": {
-            "particle": "minecraft:blocks/planks_oak"
-        },
-        "model": "minetech:gear/gear.obj",
-        "transform": "forge:default-block"
+        "model": "minetech:gear"
     },
     "variants": {
         "facing": {
@@ -21,7 +17,6 @@
                 "x": -90,
                 "y": 90
             }
-        },
-        "inventory": [ { } ]
+        }
     }
 }

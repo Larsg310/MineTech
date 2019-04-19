@@ -1,0 +1,24 @@
+{
+    "name": "Ore Mill",
+    "size": [ 3, 2, 3 ],
+    "center": [ 1, 0, 1 ],
+    "trigger": "minetech:shaft[axis=y]",
+    "block": "minetech:ore_mill",
+    "palette": {
+        "S": "minecraft:stone",
+        "X": "minecraft:stone_slab",
+        "P": "minetech:shaft[axis=y]"
+    },
+    "structure": [
+        [
+            "SSS",
+            "SSS",
+            "SSS"
+        ],
+        [
+            "XXX",
+            "XPX",
+            "XXX"
+        ]
+    ]
+}
